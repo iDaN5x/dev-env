@@ -110,5 +110,9 @@ brew install --cask \
     telegram
 ```
 
+## Install JetBrains Products
+- Install the jetbrains toolbox with brew as demonstrated above.
+- Launch the toolbox and install desired tools.
+
 ## Setup Windows 11 in Parallels
 Start Parallels and follow instructions.
