@@ -2,6 +2,11 @@
 ## Enable fingerprint authentication in terminal
 Follow [this guide](https://dev.to/equiman/how-to-use-macos-s-touch-id-on-terminal-5fhg).
 
+## Install Rosetta
+```bash
+softwareupdate --install-rosetta --agree-to-license
+``` 
+
 ## Install Homebrew
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
