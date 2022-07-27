@@ -74,6 +74,9 @@ nvm use --lts
 ```bash
 # Install thefuck command.
 brew intall \
+    tmux \
+    jq \
+    sqlite \
     thefuck \
     tldr
 ```
