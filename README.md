@@ -39,9 +39,19 @@ brew install git
 cp .gitconfig ~/.gitconfig
 ```
 
-## Setup Java 11.
+## Setup Java.
 ```bash
-brew install openjdk@11
+# Install JEnv.
+brew install jenv 
+
+# Install desired Java versions.
+brew install \
+    openjdk@11 \
+    openjdk@17
+
+# Register Java versions with JEnv.
+jenv add $(brew --prefix openjdk@11)
+jenv add $(brew --prefix openjdk@17)
 ```
 
 ## Setup Python.

@@ -71,7 +71,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git aliases alias-finder docker docker-compose thefuck poetry dotenv
+    git aliases alias-finder docker docker-compose poetry dotenv
     zsh-autosuggestions zsh-syntax-highlighting
 )
 
@@ -113,3 +113,10 @@ export NVM_DIR="$HOME/.nvm"
 
 # Starship initialization.
 eval "$(starship init zsh)"
+
+# Enable poetry.
+export PATH="$HOME/.poetry/bin:$PATH"
+
+# Enabled JEnv.
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
