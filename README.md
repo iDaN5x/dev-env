@@ -91,6 +91,11 @@ brew intall \
     tldr
 ```
 
+## Setup VIM
+```bash
+cp .vimrc ~/.vimrc
+```
+
 ## Install FiraCode font
 ```bash
 brew tap homebrew/cask-fonts
