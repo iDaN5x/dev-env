@@ -54,6 +54,11 @@ jenv add $(brew --prefix openjdk@11)
 jenv add $(brew --prefix openjdk@17)
 ```
 
+## Setup .Net
+```bash
+brew install --cask dotnet-sdk
+```
+
 ## Setup Python.
 ```bash
 # Install PyEnv
