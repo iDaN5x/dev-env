@@ -141,7 +141,8 @@ brew install --cask \
     zoom \
     jetbrains-toolbox \
     messenger \
-    telegram
+    telegram \
+    numi
 ```
 
 ## Install JetBrains Products
