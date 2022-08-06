@@ -87,13 +87,21 @@ nvm use --lts
 
 ## Install Useful Brew Forumlas.
 ```bash
-# Install thefuck command.
+# Add brew taps
+brew tap \
+    teamookla/speedtest
+
+# Update local brew database.
+brew update
+
+# Install brew formulas.
 brew intall \
     tmux \
     jq \
     sqlite \
     thefuck \
-    tldr
+    tldr \
+    speedtest
 ```
 
 ## Setup VIM
@@ -117,6 +125,9 @@ brew install --cask font-fira-code
 
 ## Install Desktop Apps
 ```bash
+# Update local brew database.
+brew update
+
 # Install automatically using cask.
 brew install --cask \
     google-chrome \
