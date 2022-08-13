@@ -72,7 +72,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git aliases alias-finder docker docker-compose poetry
-    zsh-autosuggestions zsh-syntax-highlighting
+    zsh-autosuggestions zsh-syntax-highlighting jump
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -82,7 +82,7 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [ -x "$(command -v code)" ]; then
@@ -100,7 +100,7 @@ fi
 # For a full list of active aliases, run `alias`.
 alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
-alias reload="source ~/.zshrc"
+alias reload="exec $shell"
 
 # PyEnv setup.
 export PYENV_ROOT="$HOME/.pyenv"
@@ -120,3 +120,6 @@ export PATH="$HOME/.poetry/bin:$PATH"
 # Enabled JEnv.
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+# Add fuck alias.
+eval $(thefuck --alias)
