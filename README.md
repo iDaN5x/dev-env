@@ -101,7 +101,8 @@ brew intall \
     sqlite \
     thefuck \
     tldr \
-    speedtest
+    speedtest \
+    q
 ```
 
 ## Setup VIM
@@ -142,7 +143,9 @@ brew install --cask \
     jetbrains-toolbox \
     messenger \
     telegram \
-    numi
+    numi \
+    steam \
+    vlc
 ```
 
 ## Install JetBrains Products
