@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="amuse"
+ZSH_THEME="amuse"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -72,7 +72,8 @@ HIST_STAMPS="dd.mm.yyyy"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git aliases alias-finder docker docker-compose poetry
-    zsh-autosuggestions zsh-syntax-highlighting jump
+    zsh-autosuggestions zsh-syntax-highlighting jump 
+    kubectl aws
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -123,3 +124,4 @@ eval "$(jenv init -)"
 
 # Add fuck alias.
 eval $(thefuck --alias)
+eval $(thefuck --alias f)
