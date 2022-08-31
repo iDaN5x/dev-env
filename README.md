@@ -145,7 +145,8 @@ brew install --cask \
     telegram \
     numi \
     steam \
-    vlc
+    vlc \
+    lens
 ```
 
 ## Install JetBrains Products
