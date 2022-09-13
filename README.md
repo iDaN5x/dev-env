@@ -102,7 +102,10 @@ brew intall \
     thefuck \
     tldr \
     speedtest \
-    q
+    q \
+    awscli \
+    eksctl \
+    bat
 ```
 
 ## Setup VIM
@@ -146,7 +149,9 @@ brew install --cask \
     numi \
     steam \
     vlc \
-    lens
+    lens \
+    postman \
+    anydesk
 ```
 
 ## Install JetBrains Products
@@ -155,3 +160,6 @@ brew install --cask \
 
 ## Setup Windows 11 in Parallels
 Start Parallels and follow instructions.
+
+## Install Paste
+Install the application through AppStore.
