@@ -105,7 +105,9 @@ brew intall \
     q \
     awscli \
     eksctl \
-    bat
+    bat \
+    dive \
+    k9s
 ```
 
 ## Setup VIM
@@ -151,7 +153,9 @@ brew install --cask \
     vlc \
     lens \
     postman \
-    anydesk
+    anydesk \
+    warp \
+    franz
 ```
 
 ## Install JetBrains Products
