@@ -23,7 +23,7 @@ brew install git
 cp .gitconfig ~/.gitconfig
 ```
 
-## Setup ZShell
+## Setup Shell
 ```bash
 # Install Zsh, Starship.
 brew install zsh starship
@@ -133,10 +133,9 @@ brew tap \
 brew update
 
 # Install brew formulas.
-brew intall \
+brew install \
     tmux \
     jq \
-    sqlite \
     thefuck \
     tldr \
     speedtest \
