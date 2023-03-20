@@ -71,9 +71,9 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git aliases alias-finder docker docker-compose poetry
+    git aliases alias-finder docker poetry
     zsh-autosuggestions zsh-syntax-highlighting jump 
-    kubectl aws
+    kubectl aws wd helm
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -103,25 +103,35 @@ alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 alias reload="exec $shell"
 
-# PyEnv setup.
-export PYENV_ROOT="$HOME/.pyenv"
-alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
-
-# NVM setup.
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" 
-
-# Starship initialization.
-eval "$(starship init zsh)"
-
-# Enable poetry.
-export PATH="$HOME/.poetry/bin:$PATH"
-
-# Enabled JEnv.
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
-# Add fuck alias.
+# Add 'fuck' alias to thefuck executable.
 eval $(thefuck --alias)
 eval $(thefuck --alias f)
+
+# CPP flags for openjdk.
+export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
+
+# Enable PyEnv.
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+
+# Add poetry to path. 
+export PATH="$HOME/.local/bin:$PATH"
+
+# Export merged k8s configuration.
+export KUBECONFIG=$(
+  find ~/.kube -type f -d 1 \! -name .DS_Store |
+  xargs echo |
+  sed 's/ /:/g'
+)
+
+# Hadoop
+export HADOOP_HOME=/bin/hadoop
+
+# NVM.
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# AWS.
+export AWS_DEFAULT_REGION=eu-central-1

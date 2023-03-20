@@ -1,6 +1,8 @@
 # Mac Setup
 ## Enable fingerprint authentication in terminal
-Follow [this guide](https://dev.to/equiman/how-to-use-macos-s-touch-id-on-terminal-5fhg).
+```bash
+sudo sed -i.old '2s;^;auth sufficient pam_tid.so\n;' /etc/pam.d/sudo
+```
 
 ## Install Rosetta
 ```bash
@@ -12,7 +14,16 @@ softwareupdate --install-rosetta --agree-to-license
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## Setup shell
+## Setup Git
+```bash
+# Install latest git version using brew.
+brew install git
+
+# Copy git configuration.
+cp .gitconfig ~/.gitconfig
+```
+
+## Setup ZShell
 ```bash
 # Install Zsh, Starship.
 brew install zsh starship
@@ -26,18 +37,39 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 # Install syntax-highlighting plugin.
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
-# Copy synched .zshrc.
-cp .zshrc ~/.zshrc
+# Copy synched .zshrc and .zprofile.
+cp .zshrc .zprofile ~
+
+# Edit configuration to your liking.
+vim ~/.zshrc
 ```
 
-## Setup Git
+## Setup iTerm2
+### Install iTerm2
 ```bash
-# Install latest git version using brew.
-brew install git
-
-# Copy git configuration.
-cp .gitconfig ~/.gitconfig
+brew install --cask iterm2
 ```
+
+### Install FiraCode font
+```bash
+brew tap homebrew/cask-fonts
+brew install --cask font-fira-code
+```
+
+### Enable Fingerprint for Sudo
+- Launch iTerm.
+- press `cmd+,`.
+- Go to advanced.
+- Search for "allow session".
+- Set `Allow sessions to survive logging out and back in` to `no`.
+
+### Load Profile
+- Launch iTerm.
+- press `cmd+,`. 
+- Go to profiles.
+- Other actions => import profiles from JSON.
+- Select `./iterms2/idan.json`.
+- Right click on `Idan` and `set as default`.
 
 ## Setup Java.
 ```bash
@@ -63,15 +95,18 @@ brew install --cask dotnet-sdk
 ```bash
 # Install PyEnv
 brew install pyenv
-echo '\n# Initialize PyEnv.\neval $(pyenv init --path)' >> ~/.zprofile
-export GLOBAL_PYTHON_VERSION="3.9.13"
 
 # Install global python version.
+export GLOBAL_PYTHON_VERSION="3.9.13"
 pyenv install $GLOBAL_PYTHON_VERSION
 pyenv global $GLOBAL_PYTHON_VERSION
 
 # Install poerty.
-brew install poetry
+curl -sSL https://install.python-poetry.org | python3 - --version=1.2.1
+
+# Enable poetry auto-completion in terminal.
+mkdir $ZSH_CUSTOM/plugins/poetry
+poetry completions zsh > $ZSH_CUSTOM/plugins/poetry/_poetry
 ```
 
 ## Setup NodeJs.
@@ -115,20 +150,6 @@ brew intall \
 cp .vimrc ~/.vimrc
 ```
 
-## Install FiraCode font
-```bash
-brew tap homebrew/cask-fonts
-brew install --cask font-fira-code
-```
-
-# Configure iterm2.
-- Launch iTerm
-- press `cmd+,` 
-- Go to profiles.
-- Other actions => import profiles from JSON.
-- Select `./iterms2/idan.json`
-- Right click on `Idan` => set as default.
-
 ## Install Desktop Apps
 ```bash
 # Update local brew database.
@@ -142,8 +163,6 @@ brew install --cask \
     visual-studio-code \
     font-fira-code \
     whatsapp \
-    iterm2 \
-    parallels parallels-toolbox \
     zoom \
     jetbrains-toolbox \
     messenger \
@@ -161,9 +180,6 @@ brew install --cask \
 ## Install JetBrains Products
 - Install the jetbrains toolbox with brew as demonstrated above.
 - Launch the toolbox and install desired tools.
-
-## Setup Windows 11 in Parallels
-Start Parallels and follow instructions.
 
 ## Install Paste
 Install the application through AppStore.
