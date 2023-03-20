@@ -76,9 +76,8 @@ plugins=(
     kubectl aws wd helm
 )
 
+# Enable oh-my-zsh
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -161,3 +160,6 @@ if command -v go &> /dev/null; then
   export GOROOT="$(brew --prefix golang)/libexec"
   export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 fi
+
+# Start Starship (THIS MUST BE LAST!).
+eval "$(starship init zsh)"
