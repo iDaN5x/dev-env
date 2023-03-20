@@ -76,6 +76,9 @@ brew install --cask font-fira-code
 # Install JEnv.
 brew install jenv 
 
+# Auto-export JAVA_HOME.
+jenv enable-plugin export
+
 # Install desired Java versions.
 brew install \
     openjdk@11 \
@@ -142,7 +145,8 @@ brew intall \
     eksctl \
     bat \
     dive \
-    k9s
+    k9s \
+    go
 ```
 
 ## Setup VIM

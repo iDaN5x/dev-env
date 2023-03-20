@@ -86,7 +86,7 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-if [ -x "$(command -v code)" ]; then
+if command -v code &> /dev/null; then
   export EDITOR='code'
 else
   export EDITOR='vim'
@@ -104,34 +104,60 @@ alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 alias reload="exec $shell"
 
 # Add 'fuck' alias to thefuck executable.
-eval $(thefuck --alias)
-eval $(thefuck --alias f)
+if command -v thefuck &> /dev/null; then
+  eval $(thefuck --alias)
+  eval $(thefuck --alias f)
+fi
 
 # CPP flags for openjdk.
 export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
 
+# Enable JEnv.
+if command -v jenv &> /dev/null; then
+  eval "$(jenv init -)"
+fi
+
 # Enable PyEnv.
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+if command -v pyenv &> /dev/null; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+  alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+fi
 
 # Add poetry to path. 
-export PATH="$HOME/.local/bin:$PATH"
+if command -v poetry &> /dev/null; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
 
 # Export merged k8s configuration.
-export KUBECONFIG=$(
-  find ~/.kube -type f -d 1 \! -name .DS_Store |
-  xargs echo |
-  sed 's/ /:/g'
-)
+if command -v kubectl &> /dev/null; then
+  export KUBECONFIG=$(
+    find ~/.kube -type f -d 1 \! -name .DS_Store |
+    xargs echo |
+    sed 's/ /:/g'
+  )
+fi
 
-# Hadoop
-export HADOOP_HOME=/bin/hadoop
+# Export HADOOP_HOME.
+if command -v hadoop &> /dev/null; then
+  export HADOOP_HOME=/bin/hadoop
+fi
 
-# NVM.
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# Enable NVM.
+if command -v nvm &> /dev/null; then
+  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+fi
 
-# AWS.
-export AWS_DEFAULT_REGION=eu-central-1
+# Set AWS default region.
+if command -v aws &> /dev/null; then
+  export AWS_DEFAULT_REGION=eu-central-1
+fi
+
+# Setup Go.
+if command -v go &> /dev/null; then
+  export GOPATH=$HOME/go
+  export GOROOT="$(brew --prefix golang)/libexec"
+  export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+fi
