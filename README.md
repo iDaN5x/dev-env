@@ -158,6 +158,7 @@ brew update
 # Install automatically using cask.
 brew install --cask \
     google-chrome \
+    microsoft-teams \
     docker \
     microsoft-office \
     visual-studio-code \
