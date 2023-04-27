@@ -21,6 +21,9 @@ brew install git
 
 # Copy git configuration.
 cp .gitconfig ~/.gitconfig
+
+# IMPROTANT! EDIT NAME AND EMAIL!!!
+vim ~/.gitconfig
 ```
 
 ## Setup Shell
