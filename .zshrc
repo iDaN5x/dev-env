@@ -125,9 +125,7 @@ if command -v pyenv &> /dev/null; then
 fi
 
 # Add poetry to path. 
-if command -v poetry &> /dev/null; then
-  export PATH="$HOME/.local/bin:$PATH"
-fi
+export PATH="$HOME/.local/bin:$PATH"
 
 # Export merged k8s configuration.
 if command -v kubectl &> /dev/null; then
@@ -159,6 +157,12 @@ if command -v go &> /dev/null; then
   export GOPATH=$HOME/go
   export GOROOT="$(brew --prefix golang)/libexec"
   export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+fi
+
+# Setup Haskell.
+if command -v ghcup &> /dev/null; then
+  echo "yo"
+  export PATH="$PATH:${HOME}/.ghcup/bin"
 fi
 
 # Start Starship (THIS MUST BE LAST!).

@@ -126,6 +126,23 @@ nvm install --lts
 nvm use --lts
 ```
 
+## Setup Haskell.
+```bash
+# Install GHCUp
+brew install ghcup
+
+# Install haskell toolchain.
+ghcup install ghc
+ghcup install cabal
+ghcup install stack
+ghcup install hls
+```
+
+## Setup Rust
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
 ## Install Useful Brew Forumlas.
 ```bash
 # Add brew taps
@@ -148,7 +165,8 @@ brew install \
     bat \
     dive \
     k9s \
-    go
+    go \
+    fx
 ```
 
 ## Setup VIM
