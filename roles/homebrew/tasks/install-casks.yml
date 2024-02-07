@@ -1,0 +1,5 @@
+---
+- name: Install Casks
+  community.general.homebrew_cask:
+    name: "{{ casks }}"
+    state: present

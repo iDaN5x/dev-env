@@ -1,0 +1,9 @@
+---
+- name: Install jEnv
+  include_tasks: install-jenv.yml
+
+- name: Install JDKs
+  include_tasks: install-jdks.yml
+
+- name: Validate Java environment
+  include_tasks: validate.yml

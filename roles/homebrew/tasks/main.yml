@@ -1,0 +1,9 @@
+---
+- name: Install Hombrew
+  include_tasks: install-homebrew.yml
+
+- name: Install formulas
+  include_tasks|: install-formulas.yml
+
+- name: Install casks
+  include_tasks|: install-casks.yml

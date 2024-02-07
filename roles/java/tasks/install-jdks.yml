@@ -1,0 +1,15 @@
+---
+- name: Install JDK versions
+  community.general.homebrew:
+    name: "{{ jdks }}"
+    state: present
+
+- name: Register JDK versions with jEnv
+  ansible.builtin.shell:
+    cmd: jenv add $(brew --prefix {{ item }})
+  loop: "{{ jdks }}"
+  failed_when: verify.rc != 0
+
+- name: Set global JDK
+  ansible.builtin.shell:
+    cmd: jenv enable-plugin export

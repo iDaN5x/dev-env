@@ -1,0 +1,19 @@
+---
+- name: Install jEnv
+  community.general.homebrew:
+    name: jenv
+    state: present
+
+- name: Enable jEnv in shell
+  ansible.builtin.blockinfile:
+    path: ~/.zshrc
+    marker: "# {mark} Enable JEnv."
+    block: |
+      eval "$(jenv init -)"
+    insertafter: YOUR_REGEX_HERE
+    append_newline: true
+  # TODO: check if succeeded
+
+- name: Enabled $JAVA_HOME auto-export
+  ansible.builtin.shell:
+    cmd: jenv enable-plugin export
