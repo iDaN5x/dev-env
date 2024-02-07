@@ -1,0 +1,39 @@
+# TODO: ansible?
+# TODO: move installations to separate roles?
+# TODO: pips? npms?
+
+formulas:
+  - tmux
+  - jq
+  - thefuck
+  - tldr
+  - speedtest
+  - q
+  - awscli
+  - eksctl
+  - bat
+  - dive
+  - k9s
+  - go
+  - fx
+
+casks:
+  - google-chrome
+  - microsoft-teams
+  - docker
+  - microsoft-office
+  - visual-studio-code
+  - font-fira-code
+  - whatsapp
+  - zoom
+  - jetbrains-toolbox
+  - messenger
+  - telegram
+  - numi
+  - steam
+  - vlc
+  - lens
+  - postman
+  - anydesk
+  - warp
+  - franz

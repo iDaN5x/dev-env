@@ -1,20 +1,10 @@
 ---
 - name: Install Git
   community.general.homebrew:
-    state: latest
     name: git
+    state: present
 
 - name: Generate .gitconfig file
   ansible.builtin.template:
     src: .gitconfig.j2
-    dest: "{{ ansible_env.HOME }}/.gitconfig"
-    mode: "0600"
-
-- name: Enable OhMyZsh plugin
-  when: shell_use_ohmyzsh | default(false)
-  vars:
-    plugin:
-      name: git
-  ansible.builtin.set_fact:
-    shell_ohmyzsh_extra_plugins:
-      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"
+    dest: '{{ ansible_env.HOME }}/.gitconfig'

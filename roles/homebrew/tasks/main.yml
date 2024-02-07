@@ -1,37 +1,9 @@
 ---
-- name: Determine Homebrew installation directory
-  ansible.builtin.command: brew --prefix
-  register: brew_prefix
-  ignore_errors: true
-  changed_when: false
+- name: Install Hombrew
+  include_tasks: install-homebrew.yml
 
-- name: Install Homebrew
-  when: brew_prefix.rc != 0
-  ansible.builtin.shell:
-    cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  register: install_homebrew
-  changed_when: install_homebrew.rc == 0
+- name: Install formulas
+  include_tasks|: install-formulas.yml
 
-- name: Update Homebrew
-  when: brew_prefix.rc == 0
-  community.general.homebrew:
-    update_homebrew: true
-
-- name: Add Homebrew to shell profile
-  vars:
-    section:
-      name: Enable Homebrew.
-      content: eval "$(/opt/homebrew/bin/brew shellenv)"
-      interactive_only: false
-  ansible.builtin.set_fact:
-    shell_init_sections:
-      "{{ shell_init_sections | default([]) + [section] }}"
-
-- name: Enable OhMyZsh plugin
-  when: shell_use_ohmyzsh | default(false)
-  vars:
-    plugin:
-      name: brew
-  ansible.builtin.set_fact:
-    shell_ohmyzsh_extra_plugins:
-      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"
+- name: Install casks
+  include_tasks|: install-casks.yml

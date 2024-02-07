@@ -1,15 +1,16 @@
 [init]
 	defaultBranch = main
-	templatedir = $HOME/.git-templates
+	templatedir = /Users/idan-asraf/.git-templates
 [user]
-	name = {{ git_user_name }}
-	email = {{ git_user_email }}
-{% if git_aliases %}
+	name = {{ user_name }}
+	email = {{ user_email }}
 [alias]
-{% for name, code in git_aliases.items() %}
-	{{ name }} = "{{ code }}"
-{% endfor %}
-{% endif %}
+	unstage = reset HEAD --
+	decommit = reset HEAD~1 --soft 
+	ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi"
+	tfo = "!f() { git checkout -b idan-emergency-exit && git add -A && git commit -m \"Emergency exit\" && git push origin head -u -f; }; f"
+	lazy = "!l() { git commit -a -m \"$*\"; git push; }; l"
+	count-lines = "! git log --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
 [pull]
 	rebase = true
 [push]

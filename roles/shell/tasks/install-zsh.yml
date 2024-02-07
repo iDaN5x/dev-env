@@ -1,0 +1,28 @@
+---
+- name: Install ZShell
+  community.general.homebrew:
+    name: zsh
+    state: present
+
+- name: Install Oh-my-zsh
+  ansible.builtin.shell:
+    cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+- name: Install syntax-highlighting plugin
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: "{{ zsh_plugins }}/zsh-syntax-highlighting"
+    clone: yes
+    update: yes
+
+- name: Install autosuggestions plugin
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: "{{ zsh_plugins }}/zsh-autosuggestions"
+    clone: yes
+    update: yes
+
+- name: Copy .zshrc and .zprofile files
+  ansible.builtin.copy:
+      src: .zshrc
+      dest: "{{ ansible_env.HOME }}/.zshrc"
