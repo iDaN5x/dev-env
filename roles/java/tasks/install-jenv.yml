@@ -5,12 +5,11 @@
     state: present
 
 - name: Enable jEnv in shell
-  ansible.builtin.blockinfile:
+  ansible.builtin.lineinfile:
     path: ~/.zshrc
     marker: "# {mark} Enable JEnv."
-    block: |
-      eval "$(jenv init -)"
-    insertafter: YOUR_REGEX_HERE
+    block: eval "$(jenv init -)"
+    insertbefore: "^# Start Starship \\(THIS MUST BE LAST!\\)\\.$"
     append_newline: true
   # TODO: check if succeeded
 

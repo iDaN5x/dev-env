@@ -110,4 +110,5 @@ alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 alias reload="exec $shell"
 
-# {mark} 
+# Start Starship (THIS MUST BE LAST!).
+eval "$(starship init zsh)"
