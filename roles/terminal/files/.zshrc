@@ -71,9 +71,17 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git aliases alias-finder docker poetry
-    zsh-autosuggestions zsh-syntax-highlighting jump 
-    kubectl aws wd helm
+    git 
+    aliases 
+    alias-finder 
+    docker 
+    poetry
+    zsh-autosuggestions 
+    zsh-syntax-highlighting jump 
+    kubectl 
+    aws 
+    wd 
+    helm
 )
 
 # Enable oh-my-zsh
@@ -101,69 +109,6 @@ fi
 alias zshconfig="$EDITOR ~/.zshrc"
 alias ohmyzsh="$EDITOR ~/.oh-my-zsh"
 alias reload="exec $shell"
-
-# Add 'fuck' alias to thefuck executable.
-if command -v thefuck &> /dev/null; then
-  eval $(thefuck --alias)
-  eval $(thefuck --alias f)
-fi
-
-# CPP flags for openjdk.
-export CPPFLAGS="-I/usr/local/opt/openjdk@11/include"
-
-# Enable JEnv.
-if command -v jenv &> /dev/null; then
-  eval "$(jenv init -)"
-fi
-
-# Enable PyEnv.
-if command -v pyenv &> /dev/null; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-  alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
-fi
-
-# Add poetry to path. 
-export PATH="$HOME/.local/bin:$PATH"
-
-# Export merged k8s configuration.
-if command -v kubectl &> /dev/null; then
-  export KUBECONFIG=$(
-    find ~/.kube -type f -d 1 \! -name .DS_Store |
-    xargs echo |
-    sed 's/ /:/g'
-  )
-fi
-
-# Export HADOOP_HOME.
-if command -v hadoop &> /dev/null; then
-  export HADOOP_HOME=/bin/hadoop
-fi
-
-# Enable NVM.
-if command -v nvm &> /dev/null; then
-  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-fi
-
-# Set AWS default region.
-if command -v aws &> /dev/null; then
-  export AWS_DEFAULT_REGION=eu-central-1
-fi
-
-# Setup Go.
-if command -v go &> /dev/null; then
-  export GOPATH=$HOME/go
-  export GOROOT="$(brew --prefix golang)/libexec"
-  export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
-fi
-
-# Setup Haskell.
-if command -v ghcup &> /dev/null; then
-  echo "yo"
-  export PATH="$PATH:${HOME}/.ghcup/bin"
-fi
 
 # Start Starship (THIS MUST BE LAST!).
 eval "$(starship init zsh)"

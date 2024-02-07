@@ -12,4 +12,12 @@
 
 - name: Set global JDK
   ansible.builtin.shell:
-    cmd: jenv enable-plugin export
+    cmd: "jenv global {{ global_jdk }}"
+
+- name: Export flags for global JDK.
+  ansible.builtin.lineinfile:
+    path: ~/.zshrc
+    marker: "# {mark} Set flags for JDK."
+    block: 'export CPPFLAGS="-I$(jenv prefix)/include"'
+    insertbefore: "^# Start Starship \\(THIS MUST BE LAST!\\)\\.$"
+    append_newline: true

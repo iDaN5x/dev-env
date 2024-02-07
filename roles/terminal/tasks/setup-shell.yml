@@ -1,7 +1,9 @@
 ---
 - name: Install ZShell
   community.general.homebrew:
-    name: zsh
+    name: 
+      - zsh
+      - starship
     state: present
 
 - name: Install Oh-my-zsh
@@ -24,5 +26,8 @@
 
 - name: Copy .zshrc and .zprofile files
   ansible.builtin.copy:
-      src: .zshrc
-      dest: "{{ ansible_env.HOME }}/.zshrc"
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}/{{ item }}"
+  loop:
+    - .zshrc
+    - .zprofile
