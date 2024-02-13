@@ -71,17 +71,9 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git 
-    aliases 
-    alias-finder 
-    docker 
-    poetry
-    zsh-autosuggestions 
-    zsh-syntax-highlighting jump 
-    kubectl 
-    aws 
-    wd 
-    helm
+{% for plugin in shell_ohmyzsh_plugins %}
+  {{ plugin }}
+{% endfor %}
 )
 
 # Enable oh-my-zsh
