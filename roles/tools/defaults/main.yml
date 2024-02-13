@@ -1,12 +1,30 @@
----
-# List of Homebrew taps to add.
-tools_taps: []
+tools_formulas:
+  - mas
+  - tmux
+  - jq
+  - thefuck
+  - tldr
+  - speedtest
+  - q
+  - awscli
+  - eksctl
+  - bat
+  - dive
+  - k9s
+  - go
+  - fx
 
-# List of Homebrew formulas to be installed.
-tools_formulas: []
-
-# List of Homebrew casks to be installed.
-tools_casks: []
-
-# List of apps to install from AppStore.
-tools_apps: []
+tools_casks:
+  - google-chrome
+  - microsoft-teams
+  - docker
+  - microsoft-office
+  - visual-studio-code
+  - jetbrains-toolbox
+  - numi
+  - vlc
+  - lens
+  - postman
+  - anydesk
+  - warp
+  - franz

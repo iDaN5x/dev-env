@@ -1,9 +1,21 @@
 ---
-- name: Install Hombrew
-  include_tasks: install-homebrew.yml
+- name: Fail for non-macOS systems
+  ansible.builtin.fail:
+    msg: This playbook is intended only for macOS systems.
+  when: ansible_os_family != "Darwin"
 
-- name: Install formulas
-  include_tasks|: install-formulas.yml
+- name: Determine Homebrew installation directory
+  ansible.builtin.set_fact:
+    homebrew_install_path: "{{ '/opt/homebrew' if ansible_architecture == 'arm64' else '/usr/local/Homebrew' }}"
 
-- name: Install casks
-  include_tasks|: install-casks.yml
+- name: Check if Homebrew is installed
+  ansible.builtin.stat:
+    path: "{{ homebrew_install_path }}"
+  register: homebrew_installed
+
+- name: Install Homebrew
+  ansible.builtin.shell:
+    cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  when: not homebrew_installed
+  register: command_result
+  changed_when: command_result.rc == 0

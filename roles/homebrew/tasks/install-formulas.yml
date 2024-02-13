@@ -1,5 +1,0 @@
----
-- name: Install Formulas
-  community.general.homebrew:
-    name: "{{ formulas }}"
-    state: present
