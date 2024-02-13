@@ -1,8 +1,5 @@
-# TODO: ansible?
-# TODO: move installations to separate roles?
-# TODO: pips? npms?
-
-formulas:
+tools_formulas:
+  - mas
   - tmux
   - jq
   - thefuck
@@ -17,20 +14,14 @@ formulas:
   - go
   - fx
 
-casks:
+tools_casks:
   - google-chrome
   - microsoft-teams
   - docker
   - microsoft-office
   - visual-studio-code
-  - font-fira-code
-  - whatsapp
-  - zoom
   - jetbrains-toolbox
-  - messenger
-  - telegram
   - numi
-  - steam
   - vlc
   - lens
   - postman
