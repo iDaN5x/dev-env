@@ -1,3 +1,17 @@
 ---
-user_name: Idan Or
-user_email: idan.or@outlook.com
+# Git user name and email address.
+git_user_name: Idan Or
+git_user_email: idan.or@outlook.com
+
+# Git alliases to be defined.
+git_aliases:
+  unstage: reset HEAD --
+  decommit: reset HEAD~1 --soft
+  ignore: "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi"
+  tfo: "!f() { git checkout -b idan-emergency-exit && git add -A && git commit -m \"Emergency exit\" && git push origin head -u -f; }; f"
+  lazy: "!l() { git commit -a -m \"$*\"; git push; }; l"
+  count-lines: >-
+    ! git log --author=\"$1\" --pretty=tformat: --numstat |
+    awk '{ add += $1; subs += $2; loc += $1 - $2 } END
+    { printf \"added lines: %s, removed lines: %s,
+    total lines: %s\\n\", add, subs, loc }'
