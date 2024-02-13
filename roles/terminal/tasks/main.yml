@@ -1,6 +1,0 @@
----
-- name: Setup shell.
-  include_tasks: setup-shell.yml
-
-- name: Setup iTerm 2.
-  include_tasks: setup-iterm2.yml

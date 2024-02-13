@@ -1,0 +1,13 @@
+shell_ohmyzsh_plugins:
+  - git
+  - aliases
+  - alias-finder
+  - docker
+  - poetry
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
+  - jump
+  - kubectl
+  - aws
+  - wd
+  - helm
