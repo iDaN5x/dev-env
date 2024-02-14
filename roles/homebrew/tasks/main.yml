@@ -16,3 +16,17 @@
   community.general.homebrew:
     update_homebrew: true
   when: brew_prefix_result.rc == 0
+
+- name: Create .zprofile if it does not exist
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.zprofile"
+    content: ""
+    force: false
+    mode: "0600"
+
+- name: Enable Homebrew in .zprofile
+  ansible.builtin.blockinfile:
+    dest: "{{ ansible_env.HOME }}/.zprofile"
+    marker: "# {mark} Enable Homebrew."
+    block: eval "$(/opt/homebrew/bin/brew shellenv)"
+    append_newline: true

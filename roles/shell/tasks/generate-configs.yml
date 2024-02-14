@@ -5,8 +5,9 @@
     dest: '{{ ansible_env.HOME }}/.zshrc'
     mode: '0644'
 
-- name: Copy .zprofile
+- name: Create .zprofile if it does not exist
   ansible.builtin.copy:
-    src: .zprofile
     dest: "{{ ansible_env.HOME }}/.zprofile"
-    mode: '0644'
+    content: ""
+    force: false
+    mode: "0600"
