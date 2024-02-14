@@ -1,70 +1,12 @@
 ---
-- name: Install ZShell
-  community.general.homebrew:
-    name:
-      - zsh
-      - starship
-    state: latest
+- name: Include fingerprint PAM enablement
+  ansible.builtin.include_tasks: enable-fingerprint-pam.yml
 
-- name: Get ZShell binary location
-  ansible.builtin.shell: echo "$(brew --prefix zsh)/bin/zsh"
-  register: zsh_bin_result
-  changed_when: false
-  failed_when: zsh_bin_result.rc != 0
+- name: Include ZShell setup
+  ansible.builtin.include_tasks: setup-zsh.yml
 
-- name: Add ZShell to /etc/shells
-  ansible.builtin.lineinfile:
-    path: /etc/shells
-    line: "{{ zsh_bin_result.stdout }}"
-    state: present
-  become: true
+- name: Include OhMyZsh Setup
+  ansible.builtin.include_tasks: setup-ohmyzsh.yml
 
-- name: Set ZShell as the default shell.
-  ansible.builtin.command: >
-    chsh -s {{ zsh_bin_result.stdout }} {{ ansible_env.USER }}
-  register: chsh_result
-  changed_when: chsh_result.rc == 0
-  failed_when: chsh_result.rc != 0
-  become: true
-  become_method: sudo
-
-- name: Check if Oh My Zsh is installed
-  ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.oh-my-zsh"
-  register: ohmyzsh_stat
-
-- name: Install Oh-my-zsh
-  ansible.builtin.shell:
-    cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  register: install_ohmyzsh_result
-  when: not ohmyzsh_stat.stat.exists
-  changed_when: install_ohmyzsh_result.rc == 0
-  failed_when: install_ohmyzsh_result.rc != 0
-
-- name: Install syntax-highlighting plugin
-  ansible.builtin.git:
-    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-    dest: "{{ shell_ohmyzsh_plugins_path }}/zsh-syntax-highlighting"
-    clone: true
-    update: true
-    version: master
-
-- name: Install autosuggestions plugin
-  ansible.builtin.git:
-    repo: https://github.com/zsh-users/zsh-autosuggestions
-    dest: "{{ shell_ohmyzsh_plugins_path }}/zsh-autosuggestions"
-    clone: true
-    update: true
-    version: master
-
-- name: Generate .zshrc file
-  ansible.builtin.template:
-    src: .zshrc.j2
-    dest: '{{ ansible_env.HOME }}/.zshrc'
-    mode: '0644'
-
-- name: Copy .zprofile
-  ansible.builtin.copy:
-    src: .zprofile
-    dest: "{{ ansible_env.HOME }}/.zprofile"
-    mode: '0644'
+- name: Include configurations generation
+  ansible.builtin.include_tasks: generate-configs.yml

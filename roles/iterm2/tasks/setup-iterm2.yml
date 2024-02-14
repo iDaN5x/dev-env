@@ -8,6 +8,7 @@
   ansible.builtin.get_url:
     url: https://iterm2.com/shell_integration/zsh
     dest: "{{ ansible_env.HOME }}/.iterm2_shell_integration.zsh"
+    mode: "0644"
 
 - name: Enable ZShell integration
   ansible.builtin.blockinfile:
@@ -28,7 +29,7 @@
     defaults write '{{ iterm2_plist_path }}' 'Default Bookmark Guid'
     -string {{ iterm2_profile_guid }}
   register: default_write_result
-  changed_when: default_write_result.rc == 0
+  changed_when: false
   failed_when: default_write_result.rc != 0
 
 - name: Set advanced configurations
@@ -36,6 +37,8 @@
     defaults write '{{ iterm2_plist_path }}'
     {{ item.key }} -{{ item.type }} {{ item.value }}
   loop: "{{ iterm2_advanced_configs }}"
+  loop_control:
+    label: "Set {{ item.key }} to {{ item.value }}"
   register: default_write_result
-  changed_when: default_write_result.rc == 0
+  changed_when: false
   failed_when: default_write_result.rc != 0

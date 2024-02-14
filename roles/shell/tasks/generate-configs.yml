@@ -1,0 +1,12 @@
+---
+- name: Generate .zshrc file
+  ansible.builtin.template:
+    src: .zshrc.j2
+    dest: '{{ ansible_env.HOME }}/.zshrc'
+    mode: '0644'
+
+- name: Copy .zprofile
+  ansible.builtin.copy:
+    src: .zprofile
+    dest: "{{ ansible_env.HOME }}/.zprofile"
+    mode: '0644'
