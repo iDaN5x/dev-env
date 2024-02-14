@@ -1,0 +1,7 @@
+iterm2_advanced_configs:
+  - key: AlternateMouseScroll
+    type: bool
+    value: true
+  - key: BootstrapDaemon
+    type: bool
+    value: false

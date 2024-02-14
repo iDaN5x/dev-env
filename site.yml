@@ -7,4 +7,5 @@
     # - role: shell
     # - role: tools
     # - role: apps
-    - role: java
+    # - role: java
+    - role: iterm2

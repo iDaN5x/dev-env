@@ -1,0 +1,41 @@
+---
+- name: Install iTerm2
+  community.general.homebrew_cask:
+    name: iterm2
+    state: latest
+
+- name: Download ZShell integration
+  ansible.builtin.get_url:
+    url: https://iterm2.com/shell_integration/zsh
+    dest: "{{ ansible_env.HOME }}/.iterm2_shell_integration.zsh"
+
+- name: Enable ZShell integration
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    marker: "# {mark} Enable iTerm2 integration."
+    block: source $HOME/.iterm2_shell_integration.zsh
+    insertbefore: "^# Start Starship \\(THIS MUST BE LAST!\\)\\.$"
+    append_newline: true
+
+- name: Copy user profile to DynamicProfiles directory
+  ansible.builtin.copy:
+    src: Profiles.json
+    dest: "{{ iterm2_dynamic_profiles_dir }}/Profiles.json"
+    mode: '0600'
+
+- name: Set default user profile
+  ansible.builtin.command: >
+    defaults write '{{ iterm2_plist_path }}' 'Default Bookmark Guid'
+    -string {{ iterm2_profile_guid }}
+  register: default_write_result
+  changed_when: default_write_result.rc == 0
+  failed_when: default_write_result.rc != 0
+
+- name: Set advanced configurations
+  ansible.builtin.command: >
+    defaults write '{{ iterm2_plist_path }}'
+    {{ item.key }} -{{ item.type }} {{ item.value }}
+  loop: "{{ iterm2_advanced_configs }}"
+  register: default_write_result
+  changed_when: default_write_result.rc == 0
+  failed_when: default_write_result.rc != 0
