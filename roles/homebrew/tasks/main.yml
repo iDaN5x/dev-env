@@ -1,21 +1,18 @@
 ---
-- name: Fail for non-macOS systems
-  ansible.builtin.fail:
-    msg: This playbook is intended only for macOS systems.
-  when: ansible_os_family != "Darwin"
-
 - name: Determine Homebrew installation directory
-  ansible.builtin.set_fact:
-    homebrew_install_path: "{{ '/opt/homebrew' if ansible_architecture == 'arm64' else '/usr/local/Homebrew' }}"
-
-- name: Check if Homebrew is installed
-  ansible.builtin.stat:
-    path: "{{ homebrew_install_path }}"
-  register: homebrew_installed
+  ansible.builtin.command: brew --prefix
+  register: brew_prefix_result
+  ignore_errors: true
+  changed_when: false
 
 - name: Install Homebrew
   ansible.builtin.shell:
     cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  when: not homebrew_installed
-  register: command_result
-  changed_when: command_result.rc == 0
+  when: brew_prefix_result.rc != 0
+  register: install_homebrew_result
+  changed_when: install_homebrew_result.rc == 0
+
+- name: Update Homebrew.
+  community.general.homebrew:
+    update_homebrew: true
+  when: brew_prefix_result.rc == 0
