@@ -1,21 +1,15 @@
 ---
 - name: Install PyEnv
   community.general.homebrew:
+    name: pyenv
     state: latest
-    name:
-      - pyenv
-      - pyenv-virtualenv
 
 - name: Enable PyEnv in shell
-  vars:
-    section:
-      name: Enable PyEnv.
-      content: |-
-        command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-        eval "$(pyenv init -)"
-        eval "$(pyenv virtualenv-init -)"
-        alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
-      interactive_only: false
-  ansible.builtin.set_fact:
-    shell_init_sections:
-      "{{ shell_init_sections | default([]) + [section] }}"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.zprofile"
+    marker: "# {mark} Enable PyEnv."
+    block: |
+      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+      alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+    append_newline: true

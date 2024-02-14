@@ -1,16 +1,16 @@
 ---
-- name: Detect current configuration of '{{ iterm_config.key }}'
+- name: Detect {{ item.key }} current configuration
   ansible.builtin.command:
-    defaults read {{ iterm2_plist_file | quote }} {{ iterm_config.key | quote }}
-  register: iterm_config_current_value
+    defaults read {{ iterm2_plist_path | quote }} {{ item.key | quote }}
+  register: item_current_value
   ignore_errors: true
   changed_when: false
 
-- name: Set value of '{{ iterm_config.key }}'
-  when: iterm_config.value != iterm_config_current_value.stdout
+- name: "Set {{ item.key }} to {{ item.value }}"
+  when: item.value != item_current_value.stdout
   ansible.builtin.shell: >
-    defaults write {{ iterm2_plist_file | quote }}
-    {{ iterm_config.key | quote }} {{ iterm_config.value | quote }}
-  register: default_write
-  changed_when: default_write.rc == 0
-  failed_when: default_write.rc != 0
+    defaults write {{ iterm2_plist_path | quote }}
+    {{ item.key | quote }} {{ item.value | quote }}
+  register: default_write_result
+  changed_when: default_write_result.rc == 0
+  failed_when: default_write_result.rc != 0

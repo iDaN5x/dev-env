@@ -1,11 +1,9 @@
 ---
 - name: Include install PyEnv
   ansible.builtin.include_tasks: install-pyenv.yml
-  when: python_versions | length > 0
 
 - name: Include install Python versions
   ansible.builtin.include_tasks: install-python-versions.yml
-  when: python_global_version is defined
 
 - name: Include install Poetry
   ansible.builtin.include_tasks: install-poetry.yml

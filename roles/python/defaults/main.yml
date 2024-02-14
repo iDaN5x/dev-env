@@ -1,7 +1,7 @@
 ---
-# Python versions to be installed
 python_versions:
-  - "3.11"
+  - 3.9
+  - 3.11
+  - 3.7
 
-# Python version to be set as global.
 python_global_version: "{{ python_versions[0] }}"

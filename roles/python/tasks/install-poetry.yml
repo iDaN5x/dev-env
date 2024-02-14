@@ -1,54 +1,27 @@
 ---
 - name: Detect Poetry installation
-  ansible.builtin.command: which poetry
-  register: which_poetry
+  ansible.builtin.command: poetry --version
+  register: poetry_installation
   changed_when: false
-  failed_when: false
+  ignore_errors: true
 
 - name: Install Poetry
-  when: which_poetry.rc != 0
   ansible.builtin.shell:
     cmd: |
       set -o pipefail
       curl -sSL https://install.python-poetry.org | python -
-  register: poetry_install
-  changed_when: poetry_install.rc == 0
-  failed_when: poetry_install.rc != 0
+  register: poetry_install_result
+  changed_when: poetry_install_result.rc == 0
+  failed_when: poetry_install_result.rc != 0
+  when: poetry_installation.rc != 0
   # noqa: command-instead-of-module
 
-- name: Enable Poetry
+- name: Enable Poetry terminal completion
   vars:
-    section:
-      name: Enable Poetry.
-      content: export PATH="$HOME/.local/bin:$PATH"
-      interactive_only: false
-  ansible.builtin.set_fact:
-    shell_init_sections:
-      "{{ shell_init_sections | default([]) + [section] }}"
-
-- name: Create Poetry completions script target folder
-  ansible.builtin.file:
-    path: "{{ python_poetry_completions_script | dirname }}"
-    state: directory
-    mode: "0755"
-
-- name: Generate Poetry terminal completion script
-  ansible.builtin.command: $HOME/.local/bin/poetry completions
-  register: poetry_completions
+    dest_dir: "{{ shell_ohmyzsh_plugins_path }}/poetry"
+  ansible.builtin.command: >
+    mkdir -p {{ dest_dir }} &&
+    poetry completions zsh > {{ dest_dir }}/_poetry
+  register: pyenv_completions_result
   changed_when: false
-  failed_when: poetry_completions.rc != 0
-
-- name: Save completions script
-  ansible.builtin.copy:
-    content: "{{ poetry_completions.stdout }}"
-    dest: "{{ python_poetry_completions_script }}"
-    mode: "0755"
-
-- name: Enable Poetry-env OhMyZsh completion
-  when: shell_use_ohmyzsh | default(false)
-  vars:
-    plugin:
-      name: poetry-env
-  ansible.builtin.set_fact:
-    shell_ohmyzsh_extra_plugins:
-      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"
+  failed_when: pyenv_completions_result.rc != 0

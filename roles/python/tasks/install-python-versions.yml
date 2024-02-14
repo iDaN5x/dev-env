@@ -1,25 +1,24 @@
 ---
 - name: Install Python versions
-  ansible.builtin.command: pyenv install {{ python_version }}
-  register: pyenv_install
-  changed_when: pyenv_install.rc == 0
-  failed_when: >
-    pyenv_install.rc != 0 and
-    'already exists' not in pyenv_install.stderr
+  ansible.builtin.command: pyenv install {{ item }}
   loop: "{{ python_versions }}"
   loop_control:
-    loop_var: python_version
-    label: Installing Python {{ python_version }}
+    label: "Installing Python {{ item }}"
+  register: pyenv_install_result
+  changed_when: pyenv_install_result.rc == 0
+  failed_when: >
+    pyenv_install_result.rc != 0 and
+    'already exists' not in pyenv_install_result.stderr
 
 - name: Detect current global Python version
   ansible.builtin.command: pyenv global
-  register: pyenv_get_global
+  register: python_current_global_version
   changed_when: false
   ignore_errors: true
 
 - name: Set global Python version
-  when: pyenv_get_global.stdout != python_global_version
-  ansible.builtin.command: pyenv global {{ python_global_version }}
-  register: pyenv_set_global
-  changed_when: pyenv_set_global.rc == 0
-  failed_when: pyenv_set_global.rc != 0
+  ansible.builtin.command: "pyenv global {{ python_global_version }}"
+  register: pyenv_global_result
+  when: python_current_global_version.stdout != python_global_version
+  changed_when: pyenv_global_result.rc == 0
+  failed_when: pyenv_global_result.rc != 0
