@@ -4,7 +4,29 @@
     name:
       - zsh
       - starship
+    state: latest
+
+- name: Get ZShell binary location
+  ansible.builtin.shell: echo "$(brew --prefix zsh)/bin/zsh"
+  register: zsh_bin_result
+  changed_when: false
+  failed_when: zsh_bin_result.rc != 0
+
+- name: Add ZShell to /etc/shells
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ zsh_bin_result.stdout }}"
     state: present
+  become: true
+
+- name: Set ZShell as the default shell.
+  ansible.builtin.command: >
+    chsh -s {{ zsh_bin_result.stdout }} {{ ansible_env.USER }}
+  register: chsh_result
+  changed_when: chsh_result.rc == 0
+  failed_when: chsh_result.rc != 0
+  become: true
+  become_method: sudo
 
 - name: Check if Oh My Zsh is installed
   ansible.builtin.stat:
@@ -14,10 +36,10 @@
 - name: Install Oh-my-zsh
   ansible.builtin.shell:
     cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  register: command_result
+  register: install_ohmyzsh_result
   when: not ohmyzsh_stat.stat.exists
-  changed_when: command_result.rc == 0
-  failed_when: command_result.rc != 0
+  changed_when: install_ohmyzsh_result.rc == 0
+  failed_when: install_ohmyzsh_result.rc != 0
 
 - name: Install syntax-highlighting plugin
   ansible.builtin.git:

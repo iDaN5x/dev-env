@@ -2,7 +2,7 @@
 - name: Install Git
   community.general.homebrew:
     name: git
-    state: present
+    state: latest
 
 - name: Generate .gitconfig file
   ansible.builtin.template:

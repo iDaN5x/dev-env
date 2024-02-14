@@ -2,9 +2,9 @@
 - name: Install Formulas
   community.general.homebrew:
     name: "{{ tools_formulas }}"
-    state: present
+    state: latest
 
 - name: Install Casks
   community.general.homebrew_cask:
     name: "{{ tools_casks }}"
-    state: present
+    state: latest

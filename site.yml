@@ -2,8 +2,9 @@
 - name: Apply roles
   hosts: localhost
   roles:
-    - role: homebrew
-    - role: git
-    - role: shell
-    - role: tools
-    - role: apps
+    # - role: homebrew
+    # - role: git
+    # - role: shell
+    # - role: tools
+    # - role: apps
+    - role: java
