@@ -94,7 +94,7 @@
         "Alpha Component": 1,
         "Green Component": 0.8635593056678772
       },
-      "Working Directory": "$HOME",
+      "Working Directory": "\/Users\/idan-asraf",
       "Use Tab Color": false,
       "Blinking Cursor": false,
       "Disable Window Resizing": true,
@@ -425,7 +425,7 @@
         "Green Component": 0.76887255907058716
       },
       "ASCII Ligatures": true,
-      "Name": "Default",
+      "Name": "Idan",
       "Cursor Text Color": {
         "Red Component": 0.15692716836929321,
         "Color Space": "sRGB",

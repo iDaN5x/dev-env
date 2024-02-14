@@ -1,5 +1,5 @@
 ---
-- name: Install Casks
+- name: Install casks
   community.general.homebrew_cask:
     name: "{{ apps_casks }}"
     state: latest
