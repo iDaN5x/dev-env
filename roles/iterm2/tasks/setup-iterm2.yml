@@ -25,20 +25,15 @@
     mode: '0600'
 
 - name: Set default user profile
-  ansible.builtin.command: >
-    defaults write '{{ iterm2_plist_path }}' 'Default Bookmark Guid'
-    -string {{ iterm2_profile_guid }}
-  register: default_write_result
-  changed_when: false
-  failed_when: default_write_result.rc != 0
+  ansible.builtin.include_tasks: set-iterm2-configuration.yml
+  vars:
+    item:
+      key: 'Default Bookmark Guid'
+      value: '{{ iterm2_profile_guid }}'
 
 - name: Set advanced configurations
-  ansible.builtin.command: >
-    defaults write '{{ iterm2_plist_path }}'
-    {{ item.key }} -{{ item.type }} {{ item.value }}
+  ansible.builtin.include_tasks: set-iterm2-configuration.yml
   loop: "{{ iterm2_advanced_configs }}"
   loop_control:
     label: "Set {{ item.key }} to {{ item.value }}"
-  register: default_write_result
-  changed_when: false
-  failed_when: default_write_result.rc != 0
+    

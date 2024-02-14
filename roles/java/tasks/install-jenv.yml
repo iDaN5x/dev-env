@@ -2,17 +2,19 @@
 - name: Install jEnv
   community.general.homebrew:
     name: jenv
-    state: present
+    state: latest
 
 - name: Enable jEnv in shell
-  ansible.builtin.lineinfile:
-    path: ~/.zshrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.zshrc"
     marker: "# {mark} Enable JEnv."
     block: eval "$(jenv init -)"
     insertbefore: "^# Start Starship \\(THIS MUST BE LAST!\\)\\.$"
     append_newline: true
-  # TODO: check if succeeded
 
-- name: Enabled $JAVA_HOME auto-export
-  ansible.builtin.shell:
-    cmd: jenv enable-plugin export
+# TODO: debug
+# - name: Enabled $JAVA_HOME auto-export
+#   ansible.builtin.command: eval "$(jenv init -)" && jenv enable-plugin export
+#   register: jenv_export_result
+#   changed_when: jenv_export_result.rc == 0
+#   failed_when: jenv_export_result.rc != 0

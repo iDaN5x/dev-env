@@ -1,0 +1,7 @@
+---
+python_versions:
+  - 3.9
+  - 3.11
+  - 3.7
+
+python_global_version: "{{ python_versions[0] }}"

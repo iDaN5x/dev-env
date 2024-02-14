@@ -1,22 +1,27 @@
 ---
 - name: Install JDK versions
   community.general.homebrew:
-    name: "{{ jdks }}"
-    state: present
+    name: "{{ java_jdks }}"
+    state: latest
 
 - name: Register JDK versions with jEnv
-  ansible.builtin.shell:
-    cmd: jenv add $(brew --prefix {{ item }})
-  loop: "{{ jdks }}"
-  failed_when: verify.rc != 0
+  ansible.builtin.command: jenv add $(brew --prefix {{ item }})
+  loop: "{{ java_jdks }}"
+  loop_control:
+    label: "Registering {{ item }}"
+  register: jenv_add_result
+  changed_when: jenv_add_result.rc == 0
+  failed_when: jenv_add_result.rc != 0
 
 - name: Set global JDK
-  ansible.builtin.shell:
-    cmd: "jenv global {{ global_jdk }}"
+  ansible.builtin.command: "jenv global {{ global_jdk }}"
+  register: jenv_global_result
+  changed_when: jenv_global_result.rc == 0
+  failed_when: jenv_global_result.rc != 0
 
-- name: Export flags for global JDK.
-  ansible.builtin.lineinfile:
-    path: ~/.zshrc
+- name: Export flags for global JDK
+  ansible.builtin.blockinfile:
+    dest: "{{ ansible_env.HOME }}/.zshrc"
     marker: "# {mark} Set flags for JDK."
     block: 'export CPPFLAGS="-I$(jenv prefix)/include"'
     insertbefore: "^# Start Starship \\(THIS MUST BE LAST!\\)\\.$"
