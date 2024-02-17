@@ -36,4 +36,3 @@
   loop: "{{ iterm2_advanced_configs }}"
   loop_control:
     label: "Set {{ item.key }} to {{ item.value }}"
-    

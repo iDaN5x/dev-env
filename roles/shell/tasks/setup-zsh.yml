@@ -1,9 +1,7 @@
 ---
 - name: Install ZShell
   community.general.homebrew:
-    name:
-      - zsh
-      - starship
+    name: zsh
     state: latest
 
 - name: Get ZShell binary location
@@ -20,10 +18,11 @@
   become: true
 
 - name: Set ZShell as the default shell.
-  ansible.builtin.command: >
+  ansible.builtin.command:
     chsh -s {{ zsh_bin_result.stdout }} {{ ansible_env.USER }}
   register: chsh_result
-  changed_when: false
+  when: zsh_bin_result.stdout != ansible_env.SHELL
+  changed_when: chsh_result.rc == 0
   failed_when: chsh_result.rc != 0
   become: true
   become_method: ansible.builtin.sudo

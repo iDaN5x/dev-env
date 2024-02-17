@@ -2,7 +2,7 @@
 - name: Enable support for fingerprint authentication in terminal
   ansible.builtin.lineinfile:
     path: /etc/pam.d/sudo
-    insertafter: '^#%PAM-1.0'
+    insertafter: '^# sudo: auth account password session'
     line: 'auth sufficient pam_tid.so'
     backup: true
   become: true

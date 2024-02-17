@@ -8,5 +8,5 @@
 - name: Include OhMyZsh Setup
   ansible.builtin.include_tasks: setup-ohmyzsh.yml
 
-- name: Include configurations generation
-  ansible.builtin.include_tasks: generate-configs.yml
+- name: Setup Starship
+  ansible.builtin.include_tasks: setup-starship.yml

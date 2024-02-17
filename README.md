@@ -1,20 +1,28 @@
-# Mac Setup
-## Enable fingerprint authentication in terminal
+# My Development Environment
+> Quickly setup my development enviroment
+
+## Automatic Setup with Ansible
+```bash
+pip3 install ansible && ansible pull https://github.com/iDaN5x/dev-env.git
+```
+
+## Semi-Manual Setup
+### Enable fingerprint authentication in terminal
 ```bash
 sudo sed -i.old '2s;^;auth sufficient pam_tid.so\n;' /etc/pam.d/sudo
 ```
 
-## Install Rosetta
+### Install Rosetta
 ```bash
 softwareupdate --install-rosetta --agree-to-license
 ``` 
 
-## Install Homebrew
+### Install Homebrew
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## Setup Git
+### Setup Git
 ```bash
 # Install latest git version using brew.
 brew install git
@@ -26,7 +34,7 @@ cp .gitconfig ~/.gitconfig
 vim ~/.gitconfig
 ```
 
-## Setup Shell
+### Setup Shell
 ```bash
 # Install Zsh, Starship.
 brew install zsh starship
@@ -47,26 +55,26 @@ cp .zshrc .zprofile ~
 vim ~/.zshrc
 ```
 
-## Setup iTerm2
-### Install iTerm2
+### Setup iTerm2
+#### Install iTerm2
 ```bash
 brew install --cask iterm2
 ```
 
-### Install FiraCode font
+#### Install FiraCode font
 ```bash
 brew tap homebrew/cask-fonts
 brew install --cask font-fira-code
 ```
 
-### Enable Fingerprint for Sudo
+#### Enable Fingerprint for Sudo
 - Launch iTerm.
 - press `cmd+,`.
 - Go to advanced.
 - Search for "allow session".
 - Set `Allow sessions to survive logging out and back in` to `no`.
 
-### Load Profile
+#### Load Profile
 - Launch iTerm.
 - press `cmd+,`. 
 - Go to profiles.
@@ -74,7 +82,7 @@ brew install --cask font-fira-code
 - Select `./iterms2/idan.json`.
 - Right click on `Idan` and `set as default`.
 
-## Setup Java.
+### Setup Java.
 ```bash
 # Install JEnv.
 brew install jenv 
@@ -92,12 +100,12 @@ jenv add $(brew --prefix openjdk@11)
 jenv add $(brew --prefix openjdk@17)
 ```
 
-## Setup .Net
+### Setup .Net
 ```bash
 brew install --cask dotnet-sdk
 ```
 
-## Setup Python.
+### Setup Python.
 ```bash
 # Install PyEnv
 brew install pyenv
@@ -115,7 +123,7 @@ mkdir $ZSH_CUSTOM/plugins/poetry
 poetry completions zsh > $ZSH_CUSTOM/plugins/poetry/_poetry
 ```
 
-## Setup NodeJs.
+### Setup NodeJs.
 ```bash
 # Install NVM.
 brew install nvm
@@ -126,7 +134,7 @@ nvm install --lts
 nvm use --lts
 ```
 
-## Setup Haskell.
+### Setup Haskell.
 ```bash
 # Install GHCUp
 brew install ghcup
@@ -138,12 +146,12 @@ ghcup install stack
 ghcup install hls
 ```
 
-## Setup Rust
+### Setup Rust
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-## Install Useful Brew Forumlas.
+### Install Useful Brew Forumlas.
 ```bash
 # Add brew taps
 brew tap \
@@ -169,12 +177,12 @@ brew install \
     fx
 ```
 
-## Setup VIM
+### Setup VIM
 ```bash
 cp .vimrc ~/.vimrc
 ```
 
-## Install Desktop Apps
+### Install Desktop Apps
 ```bash
 # Update local brew database.
 brew update
@@ -202,9 +210,9 @@ brew install --cask \
     franz
 ```
 
-## Install JetBrains Products
+### Install JetBrains Products
 - Install the jetbrains toolbox with brew as demonstrated above.
 - Launch the toolbox and install desired tools.
 
-## Install Paste
+### Install Paste
 Install the application through AppStore.

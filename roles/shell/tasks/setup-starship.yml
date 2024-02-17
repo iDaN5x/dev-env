@@ -1,0 +1,14 @@
+---
+- name: Install Starship
+  community.general.homebrew:
+    name: starship
+    state: latest
+
+- name: Enable Startship in .zshrc
+  ansible.builtin.blockinfile:
+    dest: "{{ ansible_env.HOME }}/.zshrc"
+    marker: "# {mark} Enable Starship (THIS MUST BE LAST!)"
+    block: |
+      eval "$(starship init zsh)"
+    insertafter: EOF
+    prepend_newline: true
