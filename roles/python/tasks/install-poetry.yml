@@ -22,7 +22,7 @@
   register: pyenv_completion_exists
 
 - name: Enable Poetry terminal completion
-  ansible.builtin.command: >
+  ansible.builtin.shell: >
     mkdir -p {{ shell_ohmyzsh_plugins_path }}/poetry &&
     poetry completions zsh > {{ shell_ohmyzsh_plugins_path }}/poetry/_poetry
   register: pyenv_completions_result
