@@ -27,3 +27,16 @@
     clone: true
     update: true
     version: master
+
+- name: Generate .zshrc file
+  ansible.builtin.template:
+    src: .zshrc.j2
+    dest: '{{ ansible_env.HOME }}/.zshrc'
+    mode: '0644'
+
+- name: Create .zprofile if it does not exist
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.zprofile"
+    content: ""
+    force: false
+    mode: "0600"

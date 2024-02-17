@@ -1,9 +1,9 @@
 ---
 - name: Detect Poetry installation
-  ansible.builtin.command: poetry --version
-  register: poetry_installation
+  ansible.builtin.command: which poetry
+  register: which_poetry_result
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: Install Poetry
   ansible.builtin.shell:
@@ -13,15 +13,19 @@
   register: poetry_install_result
   changed_when: poetry_install_result.rc == 0
   failed_when: poetry_install_result.rc != 0
-  when: poetry_installation.rc != 0
+  when: which_poetry_result.rc != 0
   # noqa: command-instead-of-module
 
+- name: Check if Poetry terminal completion is enabled.
+  ansible.builtin.stat:
+    path: "{{ shell_ohmyzsh_plugins_path }}/poetry/_poetry"
+  register: pyenv_completion_exists
+
 - name: Enable Poetry terminal completion
-  vars:
-    dest_dir: "{{ shell_ohmyzsh_plugins_path }}/poetry"
   ansible.builtin.command: >
-    mkdir -p {{ dest_dir }} &&
-    poetry completions zsh > {{ dest_dir }}/_poetry
+    mkdir -p {{ shell_ohmyzsh_plugins_path }}/poetry &&
+    poetry completions zsh > {{ shell_ohmyzsh_plugins_path }}/poetry/_poetry
   register: pyenv_completions_result
-  changed_when: false
+  when: pyenv_completion_exists.stat.exists
+  changed_when: pyenv_completions_result.rc != 0
   failed_when: pyenv_completions_result.rc != 0

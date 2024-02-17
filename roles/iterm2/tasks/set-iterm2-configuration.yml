@@ -1,12 +1,12 @@
 ---
-- name: Detect {{ item.key }} current configuration
+- name: Detect current configuration of '{{ item.key }}'
   ansible.builtin.command:
     defaults read {{ iterm2_plist_path | quote }} {{ item.key | quote }}
   register: item_current_value
   ignore_errors: true
   changed_when: false
 
-- name: "Set {{ item.key }} to {{ item.value }}"
+- name: Set value of '{{ item.key }}'
   when: item.value != item_current_value.stdout
   ansible.builtin.shell: >
     defaults write {{ iterm2_plist_path | quote }}
