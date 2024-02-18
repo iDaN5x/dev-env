@@ -1,32 +1,34 @@
 ---
 - name: Determine Homebrew installation directory
   ansible.builtin.command: brew --prefix
-  register: brew_prefix_result
+  register: brew_prefix
   ignore_errors: true
   changed_when: false
 
 - name: Install Homebrew
   ansible.builtin.shell:
     cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  when: brew_prefix_result.rc != 0
-  register: install_homebrew_result
-  changed_when: install_homebrew_result.rc == 0
+  when: brew_prefix.rc != 0
+  register: install_homebrew
+  changed_when: install_homebrew.rc == 0
 
 - name: Update Homebrew
   community.general.homebrew:
     update_homebrew: true
-  when: brew_prefix_result.rc == 0
+  when: brew_prefix.rc == 0
 
 - name: Create .zprofile if it does not exist
   ansible.builtin.copy:
     dest: "{{ ansible_env.HOME }}/.zprofile"
     content: ""
     force: false
-    mode: "0600"
+    mode: "0644"
 
-- name: Enable Homebrew in .zprofile
-  ansible.builtin.blockinfile:
-    dest: "{{ ansible_env.HOME }}/.zprofile"
-    marker: "# {mark} Enable Homebrew."
-    block: eval "$(/opt/homebrew/bin/brew shellenv)"
-    append_newline: true
+- name: Ensure Homebrew is added to shell profile
+  vars:
+    homebrew_section:
+      name: "Enable Homebrew."
+      content: eval "$(/opt/homebrew/bin/brew shellenv)"
+  ansible.builtin.set_fact:
+    shell_profile_sections:
+      "{{ shell_profile_sections + [homebrew_section] }}"

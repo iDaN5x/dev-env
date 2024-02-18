@@ -1,9 +1,9 @@
 ---
 - name: Install Rosetta
   ansible.builtin.command: softwareupdate --install-rosetta --agree-to-license
-  register: jenv_global_result
+  register: jenv_global
   changed_when: false
-  failed_when: jenv_global_result.rc != 0
+  failed_when: jenv_global.rc != 0
 
 - name: Install formulas
   community.general.homebrew:

@@ -4,25 +4,14 @@
     name: "{{ java_jdks }}"
     state: latest
 
-- name: Register JDK versions with jEnv
-  ansible.builtin.command: jenv add $(brew --prefix {{ item }})
+- name: Register JDKs
+  ansible.builtin.include_tasks: register-jdk.yml
   loop: "{{ java_jdks }}"
   loop_control:
-    label: "Registering {{ item }}"
-  register: jenv_add_result
-  changed_when: jenv_add_result.rc == 0
-  failed_when: jenv_add_result.rc != 0
+    loop_var: jdk
+    label: "Register JDK {{ jdk }}"
 
-- name: Set global JDK
-  ansible.builtin.command: "jenv global {{ global_jdk }}"
-  register: jenv_global_result
-  changed_when: jenv_global_result.rc == 0
-  failed_when: jenv_global_result.rc != 0
-
-- name: Export flags for global JDK
-  ansible.builtin.blockinfile:
-    dest: "{{ ansible_env.HOME }}/.zshrc"
-    marker: "# {mark} Set flags for JDK."
-    block: 'export CPPFLAGS="-I$(jenv prefix)/include"'
-    insertbefore: "^# Start Starship \\(THIS MUST BE LAST!\\)\\.$"
-    append_newline: true
+- name: Refresh registered JDKs
+  ansible.builtin.command: jenv refresh-versions
+  register: jenv_refresh
+  changed_when: false

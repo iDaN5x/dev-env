@@ -2,11 +2,11 @@
 - name: Apply roles
   hosts: localhost
   roles:
-    # - role: homebrew
+    - role: homebrew
     # - role: git
-    # - role: shell
+    - role: shell
+    - role: iterm2
     # - role: tools
     # - role: apps
-    # - role: java
-    # - role: iterm2
     - role: python
+    - role: java

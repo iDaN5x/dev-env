@@ -1,4 +1,4 @@
 ---
-dependencies:
-  - role: homebrew
-  - role: shell
+# dependencies:
+#   - role: homebrew
+#   - role: shell
