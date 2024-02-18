@@ -6,15 +6,15 @@
 
 - name: Enable jEnv in shell
   ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.zshrc"
+    path: "{{ ansible_env.HOME }}/.zprofile"
     marker: "# {mark} Enable JEnv."
-    block: eval "$(jenv init -)"
-    insertbefore: "^# Start Starship \\(THIS MUST BE LAST!\\)\\.$"
+    block: |
+      export PATH="$HOME/.jenv/bin:$PATH"
+      eval "$(jenv init -)"
     append_newline: true
 
-# TODO: debug
-# - name: Enabled $JAVA_HOME auto-export
-#   ansible.builtin.command: eval "$(jenv init -)" && jenv enable-plugin export
-#   register: jenv_export_result
-#   changed_when: jenv_export_result.rc == 0
-#   failed_when: jenv_export_result.rc != 0
+- name: Enabled $JAVA_HOME auto-export
+  ansible.builtin.shell: eval $(jenv init -) && jenv enable-plugin export
+  register: jenv_export
+  changed_when: "'already enabled' not in jenv_export.stdout"
+  failed_when: jenv_export.rc != 0

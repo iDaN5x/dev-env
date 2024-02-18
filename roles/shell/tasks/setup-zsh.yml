@@ -6,23 +6,46 @@
 
 - name: Get ZShell binary location
   ansible.builtin.shell: echo "$(brew --prefix zsh)/bin/zsh"
-  register: zsh_bin_result
+  register: zsh_bin
   changed_when: false
-  failed_when: zsh_bin_result.rc != 0
+  failed_when: zsh_bin.rc != 0
 
 - name: Add ZShell to /etc/shells
   ansible.builtin.lineinfile:
     path: /etc/shells
-    line: "{{ zsh_bin_result.stdout }}"
+    line: "{{ zsh_bin.stdout }}"
     state: present
   become: true
 
 - name: Set ZShell as the default shell.
   ansible.builtin.command:
-    chsh -s {{ zsh_bin_result.stdout }} {{ ansible_env.USER }}
-  register: chsh_result
-  when: zsh_bin_result.stdout != ansible_env.SHELL
-  changed_when: chsh_result.rc == 0
-  failed_when: chsh_result.rc != 0
+    chsh -s {{ zsh_bin.stdout }} {{ ansible_env.USER }}
+  register: chsh
+  when: zsh_bin.stdout != ansible_env.SHELL
+  changed_when: chsh.rc == 0
+  failed_when: chsh.rc != 0
   become: true
   become_method: ansible.builtin.sudo
+
+- name: Generate shell-file {{ shell_file }}
+  ansible.builtin.template:
+    src: "{{ shell_file }}.j2"
+    dest: '{{ ansible_env.HOME }}/{{ shell_file }}'
+    mode: '0644'
+  loop:
+    - .zshrc
+    - .zprofile
+  loop_control:
+    loop_var: shell_file
+
+- name: Create manual shell-file {{ shell_file }}
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/{{ shell_file }}"
+    content: ""
+    force: false
+    mode: "0644"
+  loop:
+    - .manual.zshrc
+    - .manual.zprofile
+  loop_control:
+    loop_var: shell_file

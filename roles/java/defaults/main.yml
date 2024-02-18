@@ -1,5 +1,5 @@
 ---
 java_jdks:
-  - openjdk@19
+  - openjdk@17
 
 java_global_jdk: "{{ java_jdks[0] }}"

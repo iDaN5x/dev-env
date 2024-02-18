@@ -15,7 +15,7 @@
     path: "{{ ansible_env.HOME }}/.zshrc"
     marker: "# {mark} Enable iTerm2 integration."
     block: source $HOME/.iterm2_shell_integration.zsh
-    insertbefore: "^# Start Starship \\(THIS MUST BE LAST!\\)\\.$"
+    insertbefore: "^# BEGIN Enable Starship \\(THIS MUST BE LAST!\\)$"
     append_newline: true
 
 - name: Copy user profile to DynamicProfiles directory
@@ -27,12 +27,13 @@
 - name: Set default user profile
   ansible.builtin.include_tasks: set-iterm2-configuration.yml
   vars:
-    item:
+    iterm_config:
       key: 'Default Bookmark Guid'
       value: '{{ iterm2_profile_guid }}'
 
 - name: Set advanced configurations
   ansible.builtin.include_tasks: set-iterm2-configuration.yml
-  loop: "{{ iterm2_advanced_configs }}"
+  loop: "{{ iterm2_advanced_configs | dict2items }}"
   loop_control:
-    label: "Set {{ item.key }} to {{ item.value }}"
+    loop_var: iterm_config
+    label: "Set {{ iterm_config.key }} to {{ iterm_config.value }}"

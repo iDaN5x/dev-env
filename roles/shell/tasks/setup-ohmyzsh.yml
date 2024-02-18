@@ -7,15 +7,15 @@
 - name: Install Oh-my-zsh
   ansible.builtin.shell:
     cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  register: install_ohmyzsh_result
+  register: install_ohmyzsh
   when: not ohmyzsh_stat.stat.exists
-  changed_when: install_ohmyzsh_result.rc == 0
-  failed_when: install_ohmyzsh_result.rc != 0
+  changed_when: install_ohmyzsh.rc == 0
+  failed_when: install_ohmyzsh.rc != 0
 
 - name: Install syntax-highlighting plugin
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-    dest: "{{ shell_ohmyzsh_plugins_path }}/zsh-syntax-highlighting"
+    dest: "{{ shell_zsh_plugins_path }}/zsh-syntax-highlighting"
     clone: true
     update: true
     version: master
@@ -23,20 +23,7 @@
 - name: Install autosuggestions plugin
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
-    dest: "{{ shell_ohmyzsh_plugins_path }}/zsh-autosuggestions"
+    dest: "{{ shell_zsh_plugins_path }}/zsh-autosuggestions"
     clone: true
     update: true
     version: master
-
-- name: Generate .zshrc file
-  ansible.builtin.template:
-    src: .zshrc.j2
-    dest: '{{ ansible_env.HOME }}/.zshrc'
-    mode: '0644'
-
-- name: Create .zprofile if it does not exist
-  ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.zprofile"
-    content: ""
-    force: false
-    mode: "0600"

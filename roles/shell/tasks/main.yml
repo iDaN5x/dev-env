@@ -1,6 +1,7 @@
 ---
-- name: Include fingerprint PAM enablement
-  ansible.builtin.include_tasks: enable-fingerprint-pam.yml
+# TODO: enable later.
+# - name: Include fingerprint PAM enablement
+#   ansible.builtin.include_tasks: enable-fingerprint-pam.yml
 
 - name: Include ZShell setup
   ansible.builtin.include_tasks: setup-zsh.yml
