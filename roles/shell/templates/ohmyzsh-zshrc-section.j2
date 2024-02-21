@@ -1,0 +1,21 @@
+## Path to oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+## Update OhMyZsh automatically once a week.
+zstyle ':omz:update' mode auto      
+zstyle ':omz:update' frequency {{ shell_ohmyzsh_update_frequency_days }}
+
+## Set theme to load.
+ZSH_THEME="{{ shell_ohmyzsh_theme }}"
+
+## OhMyZsh Plugins to load.
+## Standard plugins can be found in $ZSH/plugins/
+## Custom plugins may be added to $ZSH_CUSTOM/plugins/
+plugins=(
+{% for plugin in shell_ohmyzsh_plugins %}
+  {{ plugin }}
+{% endfor %}
+)
+
+## Enable oh-my-zsh
+source $ZSH/oh-my-zsh.sh
