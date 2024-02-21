@@ -5,11 +5,13 @@
     state: latest
 
 - name: Enable PyEnv in shell
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.zprofile"
-    marker: "# {mark} Enable PyEnv."
-    block: |
-      command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init -)"
-      alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
-    append_newline: true
+  vars:
+    section:
+      name: "Enable PyEnv."
+      content: |
+        command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init -)"
+        alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_zprofile_sections | default([]) + [section] }}"

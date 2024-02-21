@@ -26,26 +26,3 @@
   failed_when: chsh.rc != 0
   become: true
   become_method: ansible.builtin.sudo
-
-- name: Generate shell-file {{ shell_file }}
-  ansible.builtin.template:
-    src: "{{ shell_file }}.j2"
-    dest: '{{ ansible_env.HOME }}/{{ shell_file }}'
-    mode: '0644'
-  loop:
-    - .zshrc
-    - .zprofile
-  loop_control:
-    loop_var: shell_file
-
-- name: Create manual shell-file {{ shell_file }}
-  ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/{{ shell_file }}"
-    content: ""
-    force: false
-    mode: "0644"
-  loop:
-    - .manual.zshrc
-    - .manual.zprofile
-  loop_control:
-    loop_var: shell_file

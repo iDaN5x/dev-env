@@ -5,16 +5,21 @@
     state: latest
 
 - name: Enable jEnv in shell
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.zprofile"
-    marker: "# {mark} Enable JEnv."
-    block: |
-      export PATH="$HOME/.jenv/bin:$PATH"
-      eval "$(jenv init -)"
-    append_newline: true
+  vars:
+    section:
+      name: "Enable JEnv."
+      content: |
+        export PATH="$HOME/.jenv/bin:$PATH"
+        eval "$(jenv init -)"
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_zprofile_sections | default([]) + [section] }}"
 
 - name: Enabled $JAVA_HOME auto-export
-  ansible.builtin.shell: eval $(jenv init -) && jenv enable-plugin export
+  ansible.builtin.shell: >
+    PATH="$HOME/.jenv/bin:$PATH"
+    eval $(jenv init -) &&
+    jenv enable-plugin export
   register: jenv_export
   changed_when: "'already enabled' not in jenv_export.stdout"
   failed_when: jenv_export.rc != 0

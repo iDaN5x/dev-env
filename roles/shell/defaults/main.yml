@@ -1,20 +1,25 @@
+# List of plugins to load.
 shell_zsh_plugins:
-  - git
   - aliases
   - alias-finder
-  - docker
-  - poetry
-  - zsh-autosuggestions
-  - zsh-syntax-highlighting
   - jump
-  - kubectl
-  - aws
   - wd
-  - helm
 
+# List of aliases to define.
 shell_zsh_aliases:
   zshconfig: $EDITOR $HOME/.zshrc
   ohmyzsh: $EDITOR $HOME/.oh-my-zsh
   reload: exec $shell
 
-shell_profile_sections: []
+# List of sections to add to the .zshrc file.
+shell_zshrc_sections: []
+
+# List of sections to add to the .zprofile file.
+shell_zprofile_sections: []
+
+# Whether to setup and use OhMyZsh.
+shell_use_ohmyzsh: true
+
+# Whether to setup and use Starship.
+shell_use_starship: true
+

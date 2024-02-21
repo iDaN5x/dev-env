@@ -1,0 +1,80 @@
+---
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+      roles:
+        - role: git
+          vars:
+            # Git user name and email address.
+            git_user_name: Idan Or
+            git_user_email: idan.or@outlook.com
+
+        - role: iterm2
+          vars:
+            iterm2_advanced_configs:
+              AlternateMouseScroll: "1"
+              BootstrapDaemon: "0"
+
+        - role: java
+
+        - role: python
+          vars:
+            python_versions:
+              - "3.11"
+              - "3.9"
+            python_global_version: "3.11"
+
+        - role: tools
+          vars:
+            tools_formulas:
+              - mas
+              - tmux
+              - jq
+              - thefuck
+              - tldr
+              - speedtest
+              - q
+              - awscli # move to cloud role
+              - eksctl # move to cloud role
+              - bat
+              - dive # move to cloud role
+              - k9s # move to cloud role
+              - go # move to go role
+              - fx
+
+            tools_casks:
+              - google-chrome
+              - microsoft-teams
+              - whatsapp
+              - zoom
+              - messenger
+              - telegram
+              - vlc
+              - docker # TODO: create cloud role
+              - microsoft-office
+              - visual-studio-code
+              - jetbrains-toolbox
+              - numi
+              - vlc
+              - lens
+              - postman
+              - anydesk
+              - warp
+              - franz
+
+        - role: shell
+          vars:
+            shell_zsh_plugins:
+              - git # TODO: move to git role
+              - aliases
+              - alias-finder
+              - docker # TODO: move to cloud role
+              - poetry # TODO: move to python role
+              - zsh-autosuggestions # TODO: move to shell role
+              - zsh-syntax-highlighting # TODO: move to shell role
+              - jump
+              - kubectl # TODO: move to cloud role
+              - aws # TODO: move to cloud role with aws tag
+              - wd
+              - helm # TODO: move to cloud role

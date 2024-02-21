@@ -26,9 +26,9 @@
 
 - name: Ensure Homebrew is added to shell profile
   vars:
-    homebrew_section:
+    section:
       name: "Enable Homebrew."
       content: eval "$(/opt/homebrew/bin/brew shellenv)"
   ansible.builtin.set_fact:
-    shell_profile_sections:
-      "{{ shell_profile_sections + [homebrew_section] }}"
+    shell_zprofile_sections:
+      "{{ shell_zprofile_sections | default([]) + [section] }}"
