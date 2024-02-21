@@ -1,20 +1,14 @@
 ---
 all:
   hosts:
-    private-macbook:
+    personal:
       ansible_connection: local
       roles:
-        - role: homebrew
-
         - role: git
           vars:
             # Git user name and email address.
             git_user_name: Idan Or
             git_user_email: idan.or@outlook.com
-
-        - role: iterm2
-
-        - role: java
 
         - role: python
           vars:
