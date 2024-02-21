@@ -1,0 +1,24 @@
+---
+- name: Copy shell-file {{ shell_file }}
+  ansible.builtin.copy:
+    src: "{{ shell_file }}"
+    dest: "{{ ansible_env.HOME }}/{{ shell_file }}"
+    content: ""
+    force: false
+    mode: "0644"
+  loop:
+    - .zshrc
+    - .zprofile
+  loop_control:
+    loop_var: shell_file
+
+- name: Create generated shell-file {{ shell_file }}
+  ansible.builtin.template:
+    src: "{{ shell_file }}.j2"
+    dest: "{{ ansible_env.HOME }}/{{ shell_file }}"
+    mode: "0644"
+  loop:
+    - .generated.zshrc
+    - .generated.zprofile
+  loop_control:
+    loop_var: shell_file

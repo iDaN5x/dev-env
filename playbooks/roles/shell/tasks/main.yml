@@ -1,0 +1,18 @@
+---
+# TODO: enable later.
+# - name: Include fingerprint PAM enablement
+#   ansible.builtin.include_tasks: enable-fingerprint-pam.yml
+
+- name: Include ZShell setup
+  ansible.builtin.include_tasks: setup-zsh.yml
+
+- name: Include OhMyZsh setup
+  ansible.builtin.include_tasks: setup-ohmyzsh.yml
+  when: shell_use_ohmyzsh
+
+- name: Setup Starship
+  ansible.builtin.include_tasks: setup-starship.yml
+  when: shell_use_starship
+
+- name: Generate configuration files.
+  ansible.builtin.include_tasks: generate-configs.yml

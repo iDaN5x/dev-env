@@ -1,0 +1,16 @@
+[init]
+	defaultBranch = main
+	templatedir = $HOME/.git-templates
+[user]
+	name = {{ git_user_name }}
+	email = {{ git_user_email }}
+{% if git_aliases %}
+[alias]
+{% for name, code in git_aliases.items() %}
+	{{ name }} = "{{ code }}"
+{% endfor %}
+{% endif %}
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true

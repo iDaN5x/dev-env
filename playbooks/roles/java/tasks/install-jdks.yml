@@ -1,0 +1,17 @@
+---
+- name: Install JDK versions
+  community.general.homebrew:
+    name: "{{ java_jdks }}"
+    state: latest
+
+- name: Register JDKs
+  ansible.builtin.include_tasks: register-jdk.yml
+  loop: "{{ java_jdks }}"
+  loop_control:
+    loop_var: jdk
+    label: "Register JDK {{ jdk }}"
+
+- name: Refresh registered JDKs
+  ansible.builtin.command: jenv refresh-versions
+  register: jenv_refresh
+  changed_when: false

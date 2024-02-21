@@ -1,0 +1,66 @@
+---
+- name: Setup personal machine
+  hosts: personal
+  roles:
+    - role: homebrew
+    - role: iterm2
+    - role: java
+
+    - role: git
+      vars:
+        git_user_name: Idan Or
+        git_user_email: idan.or@outlook.com
+
+    - role: python
+      vars:
+        python_global_version: "3.11"
+        python_versions:
+          - "3.11"
+          - "3.9"
+
+    - role: tools
+      vars:
+        tools_formulas:
+          - mas
+          - tmux
+          - jq
+          - thefuck
+          - tldr
+          - speedtest
+          - q
+          - bat
+          - fx
+          - dive # move to cloud role
+          - k9s # move to cloud role
+
+        tools_casks:
+          - google-chrome
+          - whatsapp
+          - zoom
+          - messenger
+          - telegram
+          - vlc
+          - microsoft-office
+          - visual-studio-code
+          - jetbrains-toolbox
+          - numi
+          - postman
+          - anydesk
+          - steam
+          # - warp
+          # - raycast
+          # - arc
+          - docker # TODO: move to cloud role
+          - lens # TODO: move to cloud role
+
+    - role: shell
+      vars:
+        shell_ohmyzsh_plugins:
+          - name: aliases
+          - name: alias-finder
+          - name: jump
+          - name: wd
+          - name: helm # TODO: move to cloud role
+          - name: docker # TODO: move to cloud role
+          - name: poetry # TODO: move to python role
+          - name: kubectl # TODO: move to cloud role

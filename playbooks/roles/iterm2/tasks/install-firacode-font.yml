@@ -1,0 +1,9 @@
+---
+- name: Tap Hombrew cask-fonts tap
+  community.general.homebrew_tap:
+    name: homebrew/cask-fonts
+
+- name: Install FireCode font
+  community.general.homebrew_cask:
+    name: font-fira-code
+    state: latest

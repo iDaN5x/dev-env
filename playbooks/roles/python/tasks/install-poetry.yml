@@ -1,0 +1,40 @@
+---
+- name: Detect Poetry installation
+  ansible.builtin.command: which poetry
+  register: which_poetry
+  changed_when: false
+  failed_when: false
+
+- name: Install Poetry
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      curl -sSL https://install.python-poetry.org | python -
+  register: poetry_install
+  changed_when: poetry_install.rc == 0
+  failed_when: poetry_install.rc != 0
+  when: which_poetry.rc != 0
+  # noqa: command-instead-of-module
+
+- name: Enable Poetry
+  vars:
+    section:
+      name: Enable Poetry.
+      content: export PATH=$HOME/.local/bin:$PATH
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_zprofile_sections | default([]) + [section] }}"
+
+- name: Check if Poetry terminal completion is enabled.
+  ansible.builtin.stat:
+    path: "{{ shell_ohmyzsh_plugins_dir }}/poetry/_poetry"
+  register: pyenv_completion_exists
+
+- name: Enable Poetry terminal completion
+  ansible.builtin.shell: >
+    mkdir -p {{ shell_ohmyzsh_plugins_dir }}/poetry &&
+    poetry completions zsh > {{ shell_ohmyzsh_plugins_dir }}/poetry/_poetry
+  register: pyenv_completions
+  when: pyenv_completion_exists.stat.exists
+  changed_when: pyenv_completions.rc != 0
+  failed_when: pyenv_completions.rc != 0

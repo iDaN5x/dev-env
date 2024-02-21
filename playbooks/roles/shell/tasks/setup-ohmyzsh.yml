@@ -1,0 +1,29 @@
+---
+- name: Check if Oh My Zsh is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.oh-my-zsh"
+  register: ohmyzsh_stat
+
+- name: Install Oh-my-zsh
+  ansible.builtin.shell:
+    cmd: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  register: install_ohmyzsh
+  when: not ohmyzsh_stat.stat.exists
+  changed_when: install_ohmyzsh.rc == 0
+  failed_when: install_ohmyzsh.rc != 0
+
+- name: Enable OhMyZsh plugins
+  ansible.builtin.include_tasks: install-ohmyzsh-plugin.yml
+  loop: "{{ shell_ohmyzsh_plugins }}"
+  loop_control:
+    loop_var: plugin
+    label: "Enable plugin {{ plugin.name }}"
+
+- name: Enable OhMyZsh in .zshrc
+  vars:
+    section:
+      name: Enable OhMyZsh
+      content: "{{ lookup('template', 'ohmyzsh-zshrc-section.j2') }}"
+  ansible.builtin.set_fact:
+    shell_zshrc_sections:
+      "{{ shell_zshrc_sections | default([]) + [section] }}"
