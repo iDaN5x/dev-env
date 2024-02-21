@@ -21,8 +21,10 @@
 
 - name: Copy user profile to DynamicProfiles directory
   ansible.builtin.copy:
-    src: Profiles.json
-    dest: "{{ iterm2_dynamic_profiles_dir }}/Profiles.json"
+    src: "{{ iterm2_dynamic_profiles_file }}"
+    dest: >
+      {{ iterm2_dynamic_profiles_dir }}/
+      {{ iterm2_dynamic_profiles_file | basename }}
     mode: '0600'
 
 - name: Set default user profile
