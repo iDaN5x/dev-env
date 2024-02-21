@@ -1,9 +1,5 @@
 ---
-# Git user name and email address.
-git_user_name: Idan Or
-git_user_email: idan.or@outlook.com
-
-# Git alliases to be defined.
+# Git aliases to be defined.
 git_aliases:
   unstage: reset HEAD --
   decommit: reset HEAD~1 --soft

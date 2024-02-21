@@ -17,11 +17,13 @@
   # noqa: command-instead-of-module
 
 - name: Enable Poetry
-  ansible.builtin.blockinfile:
-    dest: "{{ ansible_env.HOME }}/.zprofile"
-    marker: "# {mark} Enable Poetry."
-    block: export PATH=$HOME/.local/bin:$PATH
-    append_newline: true
+  vars:
+    section:
+      name: "Enable Poetry."
+      content: export PATH=$HOME/.local/bin:$PATH
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_zprofile_sections | default([]) + [section] }}"
 
 - name: Check if Poetry terminal completion is enabled.
   ansible.builtin.stat:

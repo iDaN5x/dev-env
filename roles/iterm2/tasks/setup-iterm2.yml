@@ -11,12 +11,13 @@
     mode: "0644"
 
 - name: Enable ZShell integration
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.zshrc"
-    marker: "# {mark} Enable iTerm2 integration."
-    block: source $HOME/.iterm2_shell_integration.zsh
-    insertbefore: "^# BEGIN Enable Starship \\(THIS MUST BE LAST!\\)$"
-    append_newline: true
+  vars:
+    section:
+      name: "Enable iTerm2 integration."
+      content: source $HOME/.iterm2_shell_integration.zsh
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_zprofile_sections | default([]) + [section] }}"
 
 - name: Copy user profile to DynamicProfiles directory
   ansible.builtin.copy:
@@ -29,7 +30,7 @@
   vars:
     iterm_config:
       key: 'Default Bookmark Guid'
-      value: '{{ iterm2_profile_guid }}'
+      value: '{{ iterm2_default_profile_guid }}'
 
 - name: Set advanced configurations
   ansible.builtin.include_tasks: set-iterm2-configuration.yml

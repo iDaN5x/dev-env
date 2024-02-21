@@ -5,10 +5,10 @@
     state: latest
 
 - name: Enable Startship in .zshrc
-  ansible.builtin.blockinfile:
-    dest: "{{ ansible_env.HOME }}/.zshrc"
-    marker: "# {mark} Enable Starship (THIS MUST BE LAST!)"
-    block: |
-      eval "$(starship init zsh)"
-    insertafter: EOF
-    prepend_newline: true
+  vars:
+    section:
+      name: "Enable Starship (THIS MUST BE LAST!)"
+      content: eval "$(starship init zsh)"
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_zprofile_sections | default([]) + [section] }}"

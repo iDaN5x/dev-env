@@ -1,0 +1,28 @@
+---
+- name: Get current global JDK
+  ansible.builtin.command: jenv global
+  register: jenv_global
+  changed_when: false
+
+- name: Determine new global JDK version
+  ansible.builtin.shell: |
+    set -o pipefail;
+    brew list --version {{ java_global_jdk }} | awk '{print $2}'
+  register: global_jdk_version
+  changed_when: false
+
+- name: Set global JDK
+  ansible.builtin.command: jenv global {{ global_jdk_version.stdout }}
+  register: jenv_global
+  when: global_jdk_version.stdout != jenv_global.stdout
+  changed_when: jenv_global.rc == 0
+  failed_when: jenv_global.rc != 0
+
+- name: Export flags for global JDK
+  vars:
+    section:
+      name: "Set flags for JDK."
+      content: export CPPFLAGS="-I$(jenv prefix)/include"
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_zprofile_sections | default([]) + [section] }}"
