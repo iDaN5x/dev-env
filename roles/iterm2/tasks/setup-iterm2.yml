@@ -13,11 +13,11 @@
 - name: Enable ZShell integration
   vars:
     section:
-      name: "Enable iTerm2 integration."
+      name: Enable iTerm2 integration.
       content: source $HOME/.iterm2_shell_integration.zsh
   ansible.builtin.set_fact:
-    shell_zprofile_sections:
-      "{{ shell_zprofile_sections | default([]) + [section] }}"
+    shell_zshrc_sections:
+      "{{ shell_zshrc_sections | default([]) + [section] }}"
 
 - name: Copy user profile to DynamicProfiles directory
   ansible.builtin.copy:

@@ -12,18 +12,18 @@
   changed_when: install_ohmyzsh.rc == 0
   failed_when: install_ohmyzsh.rc != 0
 
-- name: Install syntax-highlighting plugin
-  ansible.builtin.git:
-    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-    dest: "{{ shell_zsh_plugins_path }}/zsh-syntax-highlighting"
-    clone: true
-    update: true
-    version: master
+- name: Enable OhMyZsh plugins
+  ansible.builtin.include_tasks: install-ohmyzsh-plugin.yml
+  loop: "{{ shell_ohmyzsh_plugins }}"
+  loop_control:
+    loop_var: plugin
+    label: "Enable plugin {{ plugin.name }}"
 
-- name: Install autosuggestions plugin
-  ansible.builtin.git:
-    repo: https://github.com/zsh-users/zsh-autosuggestions
-    dest: "{{ shell_zsh_plugins_path }}/zsh-autosuggestions"
-    clone: true
-    update: true
-    version: master
+- name: Enable OhMyZsh in .zshrc
+  vars:
+    section:
+      name: Enable OhMyZsh
+      content: "{{ lookup('template', 'ohmyzsh-zshrc-section.j2') }}"
+  ansible.builtin.set_fact:
+    shell_zshrc_sections:
+      "{{ shell_zshrc_sections | default([]) + [section] }}"

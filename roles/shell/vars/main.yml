@@ -3,4 +3,4 @@
 shell_ohmyzsh_custom_path: "{{ lookup('env', 'ZSH_CUSTOM') | default('~/.oh-my-zsh/custom', true) }}"
 
 # Path to OhMyZsh plugins directory.
-shell_zsh_plugins_path: "{{ shell_ohmyzsh_custom_path }}/plugins"
+shell_ohmyzsh_plugins_dir: "{{ shell_ohmyzsh_custom_path }}/plugins"

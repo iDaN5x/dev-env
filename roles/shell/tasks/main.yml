@@ -6,7 +6,7 @@
 - name: Include ZShell setup
   ansible.builtin.include_tasks: setup-zsh.yml
 
-- name: Include OhMyZsh Setup
+- name: Include OhMyZsh setup
   ansible.builtin.include_tasks: setup-ohmyzsh.yml
   when: shell_use_ohmyzsh
 

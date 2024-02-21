@@ -1,3 +1,5 @@
 ---
 # iTerm advanced configurations to be set.
-iterm2_advanced_configs: {}
+iterm2_advanced_configs:
+  AlternateMouseScroll: "1"
+  BootstrapDaemon: "0"

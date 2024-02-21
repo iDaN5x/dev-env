@@ -21,7 +21,7 @@
 - name: Export flags for global JDK
   vars:
     section:
-      name: "Set flags for JDK."
+      name: Set flags for JDK.
       content: export CPPFLAGS="-I$(jenv prefix)/include"
   ansible.builtin.set_fact:
     shell_zprofile_sections:

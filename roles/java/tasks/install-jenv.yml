@@ -7,7 +7,7 @@
 - name: Enable jEnv in shell
   vars:
     section:
-      name: "Enable JEnv."
+      name: Enable JEnv.
       content: |
         export PATH="$HOME/.jenv/bin:$PATH"
         eval "$(jenv init -)"

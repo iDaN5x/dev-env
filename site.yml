@@ -10,8 +10,6 @@
     #   tags: ["iterm2"]
     # - role: tools
     #   tags: ["tools"]
-    - role: apps
-      tags: ["apps"]
     # - role: python
     #   tags: ["python"]
     # - role: java
