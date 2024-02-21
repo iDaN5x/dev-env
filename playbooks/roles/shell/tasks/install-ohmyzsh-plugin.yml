@@ -1,0 +1,14 @@
+---
+- name: Install OhMyZsh plugin {{ plugin.name }}
+  ansible.builtin.git:
+    repo: "{{ plugin.repo }}"
+    dest: "{{ shell_ohmyzsh_plugins_dir }}/{{ plugin.name }}"
+    clone: true
+    update: true
+    version: master
+  when: plugin.repo
+
+- name: Enable OhMyZsh plugin {{ plugin.name }}
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_ohmyzsh_plugins | default([]) + [plugin.name] }}"

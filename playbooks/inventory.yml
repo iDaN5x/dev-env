@@ -1,0 +1,7 @@
+---
+all:
+  hosts:
+    solaredge:
+      ansible_connection: local
+    personal:
+      ansible_connection: local
