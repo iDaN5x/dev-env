@@ -9,3 +9,10 @@
     src: .gitconfig.j2
     dest: '{{ ansible_env.HOME }}/.gitconfig'
     mode: '0600'
+
+- name: Enable OhMyZsh plugin
+  var:
+    plugin_name: git
+  ansible.builtin.set_fact:
+    shell_zprofile_sections:
+      "{{ shell_ohmyzsh_plugins | default([]) + [plugin_name] }}"

@@ -1,9 +1,17 @@
+# Theme to be used by OhMyZsh.
+shell_ohmyzsh_theme: "amuse"
+
 # List of plugins to load.
-shell_zsh_plugins:
-  - aliases
-  - alias-finder
-  - jump
-  - wd
+shell_ohmyzsh_plugins:
+  - name: aliases
+  - name: alias-finder
+  - name: jump
+  - name: wd
+  - name: zsh-autosuggestions
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+  - name: zsh-syntax-highlighting
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+
 
 # List of aliases to define.
 shell_zsh_aliases:
@@ -23,3 +31,4 @@ shell_use_ohmyzsh: true
 # Whether to setup and use Starship.
 shell_use_starship: true
 
+shell_ohmyzsh_update_frequency_days: 7

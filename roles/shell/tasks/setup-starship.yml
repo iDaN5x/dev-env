@@ -7,8 +7,8 @@
 - name: Enable Startship in .zshrc
   vars:
     section:
-      name: "Enable Starship (THIS MUST BE LAST!)"
+      name: Enable Starship (THIS MUST BE LAST!)
       content: eval "$(starship init zsh)"
   ansible.builtin.set_fact:
-    shell_zprofile_sections:
-      "{{ shell_zprofile_sections | default([]) + [section] }}"
+    shell_zshrc_sections:
+      "{{ shell_zshrc_sections | default([]) + [section] }}"

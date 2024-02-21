@@ -7,7 +7,7 @@
 - name: Enable PyEnv in shell
   vars:
     section:
-      name: "Enable PyEnv."
+      name: Enable PyEnv.
       content: |
         command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
         eval "$(pyenv init -)"

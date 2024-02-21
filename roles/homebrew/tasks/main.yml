@@ -17,17 +17,10 @@
     update_homebrew: true
   when: brew_prefix.rc == 0
 
-- name: Create .zprofile if it does not exist
-  ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.zprofile"
-    content: ""
-    force: false
-    mode: "0644"
-
 - name: Ensure Homebrew is added to shell profile
   vars:
     section:
-      name: "Enable Homebrew."
+      name: Enable Homebrew.
       content: eval "$(/opt/homebrew/bin/brew shellenv)"
   ansible.builtin.set_fact:
     shell_zprofile_sections:

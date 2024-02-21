@@ -19,7 +19,7 @@
 - name: Enable Poetry
   vars:
     section:
-      name: "Enable Poetry."
+      name: Enable Poetry.
       content: export PATH=$HOME/.local/bin:$PATH
   ansible.builtin.set_fact:
     shell_zprofile_sections:
@@ -27,13 +27,13 @@
 
 - name: Check if Poetry terminal completion is enabled.
   ansible.builtin.stat:
-    path: "{{ shell_zsh_plugins_path }}/poetry/_poetry"
+    path: "{{ shell_ohmyzsh_plugins_dir }}/poetry/_poetry"
   register: pyenv_completion_exists
 
 - name: Enable Poetry terminal completion
   ansible.builtin.shell: >
-    mkdir -p {{ shell_zsh_plugins_path }}/poetry &&
-    poetry completions zsh > {{ shell_zsh_plugins_path }}/poetry/_poetry
+    mkdir -p {{ shell_ohmyzsh_plugins_dir }}/poetry &&
+    poetry completions zsh > {{ shell_ohmyzsh_plugins_dir }}/poetry/_poetry
   register: pyenv_completions
   when: pyenv_completion_exists.stat.exists
   changed_when: pyenv_completions.rc != 0

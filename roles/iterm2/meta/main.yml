@@ -1,5 +1,3 @@
 ---
 dependencies:
   - role: homebrew
-  # TODO: should I just stat for zshrc instead, to make things more flexible?
-  - role: shell
