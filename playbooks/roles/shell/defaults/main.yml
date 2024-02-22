@@ -1,3 +1,4 @@
+---
 # Theme to be used by OhMyZsh.
 shell_ohmyzsh_theme: "amuse"
 
@@ -8,9 +9,9 @@ shell_ohmyzsh_plugins:
   - name: jump
   - name: wd
   - name: zsh-autosuggestions
-    repo: https://github.com/zsh-users/zsh-autosuggestions
+    formula: zsh-autosuggestions
   - name: zsh-syntax-highlighting
-    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    formula: zsh-syntax-highlighting
 
 
 # List of aliases to define.
@@ -31,4 +32,22 @@ shell_use_ohmyzsh: true
 # Whether to setup and use Starship.
 shell_use_starship: true
 
+# Frequency of OhMyZsh updates in days.
 shell_ohmyzsh_update_frequency_days: 7
+
+# TODO: should be false?
+# Replace existing .zshrc file.
+shell_replace_zshrc: true
+
+# TODO: should be false?
+# Replace existing .zprofile file.
+shell_replace_zsprofile: true
+
+# Controls whether to setup updated Zsh installtion.
+shell_setup_zsh: true
+
+# Controls whether to setup generate Zsh configuration files.
+shell_generate_configs: true
+
+# Controls whether to enable fingerprint authentication.
+shell_enable_fingerprint: true

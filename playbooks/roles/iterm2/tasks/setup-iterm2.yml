@@ -4,13 +4,23 @@
     name: iterm2
     state: latest
 
-- name: Download ZShell integration
+- name: Download Zsh integration
   ansible.builtin.get_url:
     url: https://iterm2.com/shell_integration/zsh
     dest: "{{ ansible_env.HOME }}/.iterm2_shell_integration.zsh"
     mode: "0644"
 
-- name: Enable ZShell integration
+- name: Enable shell integration via OhMyZsh plugin
+  when: shell_use_ohmyzsh
+  vars:
+    plugin:
+      name: iterm2
+  ansible.builtin.set_fact:
+    shell_ohmyzsh_plugins:
+      "{{ shell_ohmyzsh_plugins | default([]) + [plugin] }}"
+
+- name: Enable shell integration via shell initalization
+  when: not shell_use_ohmyzsh
   vars:
     section:
       name: Enable iTerm2 integration.

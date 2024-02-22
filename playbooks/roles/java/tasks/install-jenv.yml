@@ -8,7 +8,7 @@
   vars:
     section:
       name: Enable JEnv.
-      content: |
+      content: |-
         export PATH="$HOME/.jenv/bin:$PATH"
         eval "$(jenv init -)"
   ansible.builtin.set_fact:
@@ -16,10 +16,7 @@
       "{{ shell_zprofile_sections | default([]) + [section] }}"
 
 - name: Enabled $JAVA_HOME auto-export
-  ansible.builtin.shell: >
-    PATH="$HOME/.jenv/bin:$PATH"
-    eval $(jenv init -) &&
-    jenv enable-plugin export
+  ansible.builtin.command: jenv sh-enable-plugin export
   register: jenv_export
   changed_when: "'already enabled' not in jenv_export.stdout"
   failed_when: jenv_export.rc != 0

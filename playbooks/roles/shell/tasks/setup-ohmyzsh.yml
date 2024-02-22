@@ -12,12 +12,34 @@
   changed_when: install_ohmyzsh.rc == 0
   failed_when: install_ohmyzsh.rc != 0
 
-- name: Enable OhMyZsh plugins
-  ansible.builtin.include_tasks: install-ohmyzsh-plugin.yml
-  loop: "{{ shell_ohmyzsh_plugins }}"
+- name: Install OhMyZsh plugins from brew.
+  community.general.homebrew:
+    name: >-
+      {{
+        shell_ohmyzsh_plugins | 
+        selectattr('formula', 'defined') | 
+        map(attribute='formula') | 
+        list 
+      }}
+    state: latest
+
+- name: Install OhMyZsh plugins from git repositories.
+  ansible.builtin.git:
+    repo: "{{ plugin.repo }}"
+    dest: "{{ shell_ohmyzsh_plugins_dir }}/{{ plugin.name }}"
+    clone: true
+    update: true
+    version: master
+  when: plugin.get('repo', None)
+  loop: >-
+    {{
+      shell_ohmyzsh_plugins | 
+      selectattr('repo', 'defined') | 
+      map(attribute='repo') | 
+      list 
+    }}
   loop_control:
     loop_var: plugin
-    label: "Enable plugin {{ plugin.name }}"
 
 - name: Enable OhMyZsh in .zshrc
   vars:

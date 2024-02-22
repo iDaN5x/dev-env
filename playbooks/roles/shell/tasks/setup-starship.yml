@@ -4,10 +4,10 @@
     name: starship
     state: latest
 
-- name: Enable Startship in .zshrc
+- name: Enable Startship via shell initialization.
   vars:
     section:
-      name: Enable Starship (THIS MUST BE LAST!)
+      name: Enable Starship.
       content: eval "$(starship init zsh)"
   ansible.builtin.set_fact:
     shell_zshrc_sections:
