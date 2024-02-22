@@ -51,8 +51,9 @@
           # - warp
           # - raycast
           # - arc
-          - docker # TODO: move to cloud role
-          - lens # TODO: move to cloud role
+           # TODO: move to cloud role
+          - docker
+          - lens
 
     - role: shell
       vars:
@@ -61,8 +62,8 @@
           - name: alias-finder
           - name: jump
           - name: wd
-          - name: helm # TODO: move to cloud role
-          - name: docker # TODO: move to cloud role
-          - name: poetry # TODO: move to python role
-          - name: kubectl # TODO: move to cloud role
-          - name: aws # TODO: move to cloud role with aws tag
+          # TODO: move to cloud role
+          - name: helm
+          - name: docker
+          - name: kubectl
+          - name: aws

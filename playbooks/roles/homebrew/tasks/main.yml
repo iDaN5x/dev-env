@@ -25,3 +25,12 @@
   ansible.builtin.set_fact:
     shell_zprofile_sections:
       "{{ shell_zprofile_sections | default([]) + [section] }}"
+
+- name: Enable OhMyZsh plugin
+  when: shell_use_ohmyzsh
+  vars:
+    plugin:
+      name: brew
+  ansible.builtin.set_fact:
+    shell_ohmyzsh_plugins:
+      "{{ shell_ohmyzsh_plugins | default([]) + [plugin] }}"

@@ -12,7 +12,8 @@
 
 - name: Enable OhMyZsh plugin
   vars:
-    plugin_name: git
+    plugin:
+      name: git
   ansible.builtin.set_fact:
-    shell_zprofile_sections:
-      "{{ shell_ohmyzsh_plugins | default([]) + [plugin_name] }}"
+    shell_ohmyzsh_plugins:
+      "{{ shell_ohmyzsh_plugins | default([]) + [plugin] }}"

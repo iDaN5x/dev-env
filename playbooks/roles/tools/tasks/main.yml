@@ -2,6 +2,7 @@
 - name: Install Rosetta
   ansible.builtin.command: softwareupdate --install-rosetta --agree-to-license
   register: jenv_global
+  when: ansible_architecture == "arm64"
   changed_when: false
   failed_when: jenv_global.rc != 0
 
