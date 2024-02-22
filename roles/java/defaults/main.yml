@@ -1,7 +1,0 @@
----
-# List of JDKs to install (Hombrew formulas).
-java_jdks:
-  - openjdk@17
-
-# JDK to set as global.
-java_global_jdk: "{{ java_jdks[0] }}"

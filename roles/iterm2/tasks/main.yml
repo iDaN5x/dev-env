@@ -1,6 +1,0 @@
----
-- name: Include FireCode installation
-  ansible.builtin.include_tasks: install-firacode-font.yml
-
-- name: Include iTerm2 setup
-  ansible.builtin.include_tasks: setup-iterm2.yml

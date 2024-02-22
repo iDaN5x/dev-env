@@ -1,9 +1,0 @@
----
-- name: Include install PyEnv
-  ansible.builtin.include_tasks: install-pyenv.yml
-
-- name: Include install Python versions
-  ansible.builtin.include_tasks: install-python-versions.yml
-
-- name: Include install Poetry
-  ansible.builtin.include_tasks: install-poetry.yml
