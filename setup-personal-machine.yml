@@ -1,6 +1,5 @@
 ---
 - name: Setup personal machine
-  hosts: personal
   roles:
     - role: homebrew
     - role: iterm2

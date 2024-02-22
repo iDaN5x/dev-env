@@ -1,6 +1,5 @@
 ---
 - name: Setup SolarEdge machine
-  hosts: solaredge
   roles:
     - role: homebrew
     - role: iterm2
