@@ -4,12 +4,14 @@
     src: "{{ shell_file }}.j2"
     dest: "{{ ansible_env.HOME }}/{{ shell_file }}"
     force: true
+    backup: true
     mode: "0644"
   loop:
     - .zshrc
     - .zprofile
   loop_control:
     loop_var: shell_file
+    label: copy {{ shell_file }}
 
 - name: Create generated shell files
   ansible.builtin.template:
@@ -21,3 +23,4 @@
     - .generated.zprofile
   loop_control:
     loop_var: shell_file
+    label: generate {{ shell_file }}

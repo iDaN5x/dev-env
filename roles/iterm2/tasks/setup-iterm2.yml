@@ -1,8 +1,8 @@
 ---
 - name: Install iTerm2
   community.general.homebrew_cask:
-    name: iterm2
     state: latest
+    name: iterm2
 
 - name: Download Zsh integration
   ansible.builtin.get_url:
@@ -25,9 +25,10 @@
     section:
       name: Enable iTerm2 integration.
       content: source $HOME/.iterm2_shell_integration.zsh
+      interactive: true
   ansible.builtin.set_fact:
-    shell_zshrc_sections:
-      "{{ shell_zshrc_sections | default([]) + [section] }}"
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"
 
 - name: Copy user profile to DynamicProfiles directory
   ansible.builtin.copy:

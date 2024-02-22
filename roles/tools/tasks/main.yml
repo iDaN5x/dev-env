@@ -1,17 +1,17 @@
 ---
 - name: Install Rosetta
+  when: ansible_architecture == "arm64"
   ansible.builtin.command: softwareupdate --install-rosetta --agree-to-license
   register: jenv_global
-  when: ansible_architecture == "arm64"
   changed_when: false
   failed_when: jenv_global.rc != 0
 
 - name: Install formulas
   community.general.homebrew:
-    name: "{{ tools_formulas }}"
     state: latest
+    name: "{{ tools_formulas }}"
 
 - name: Install casks
   community.general.homebrew_cask:
-    name: "{{ tools_casks }}"
     state: latest
+    name: "{{ tools_casks }}"

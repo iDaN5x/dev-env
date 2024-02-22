@@ -5,5 +5,5 @@
 
 - name: Install FireCode font
   community.general.homebrew_cask:
-    name: font-fira-code
     state: latest
+    name: font-fira-code

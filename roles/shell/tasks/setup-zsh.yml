@@ -1,8 +1,8 @@
 ---
 - name: Install Zsh
   community.general.homebrew:
-    name: zsh
     state: latest
+    name: zsh
 
 - name: Get Zsh binary location
   ansible.builtin.shell: echo "$(brew --prefix zsh)/bin/zsh"

@@ -1,8 +1,8 @@
 ---
 - name: Install JDK versions
   community.general.homebrew:
-    name: "{{ java_jdks }}"
     state: latest
+    name: "{{ java_jdks }}"
 
 - name: Register JDKs
   ansible.builtin.include_tasks: register-jdk.yml

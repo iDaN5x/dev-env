@@ -25,9 +25,11 @@ fi
 {% for name, definition in shell_zsh_aliases.items() %}
 alias {{ name }}="{{ definition}}"
 {% endfor %}
-
-{% for section in shell_zshrc_sections %}
+ 
+{% for section in shell_init_sections %}
+{% if section.interactive | default(false) %}
 # {{ section.name }}
 {{ section.content }}
 
+{% endif %}
 {% endfor %}
