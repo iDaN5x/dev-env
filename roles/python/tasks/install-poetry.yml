@@ -6,6 +6,7 @@
   failed_when: false
 
 - name: Install Poetry
+  when: which_poetry.rc != 0
   ansible.builtin.shell:
     cmd: |
       set -o pipefail
@@ -13,7 +14,6 @@
   register: poetry_install
   changed_when: poetry_install.rc == 0
   failed_when: poetry_install.rc != 0
-  when: which_poetry.rc != 0
   # noqa: command-instead-of-module
 
 - name: Enable Poetry
@@ -21,9 +21,10 @@
     section:
       name: Enable Poetry.
       content: export PATH=$HOME/.local/bin:$PATH
+      interactive: false
   ansible.builtin.set_fact:
-    shell_zprofile_sections:
-      "{{ shell_zprofile_sections | default([]) + [section] }}"
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"
 
 - name: Check if Poetry terminal completion is enabled.
   ansible.builtin.stat:
@@ -31,11 +32,11 @@
   register: pyenv_completion_script
 
 - name: Create Poetry terminal completion init script
-  ansible.builtin.shell: >
+  when: not pyenv_completion_script.stat.exists
+  ansible.builtin.shell: >-
     mkdir -p {{ shell_ohmyzsh_plugins_dir }}/poetry &&
     poetry completions zsh > {{ shell_ohmyzsh_plugins_dir }}/poetry/_poetry
   register: pyenv_completions
-  when: not pyenv_completion_script.stat.exists
   changed_when: pyenv_completions.rc != 0
   failed_when: pyenv_completions.rc != 0
 

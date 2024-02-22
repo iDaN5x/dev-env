@@ -1,5 +1,6 @@
 ---
 - name: Setup SolarEdge machine
+  hosts: localhost
   roles:
     - role: homebrew
     - role: iterm2
@@ -61,6 +62,10 @@
           - name: alias-finder
           - name: jump
           - name: wd
+          - name: zsh-autosuggestions
+            formula: zsh-autosuggestions
+          - name: zsh-syntax-highlighting
+            formula: zsh-syntax-highlighting
           # TODO: move to cloud role
           - name: helm
           - name: docker

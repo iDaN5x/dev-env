@@ -12,9 +12,9 @@
   changed_when: false
 
 - name: Set global JDK
+  when: global_jdk_version.stdout != jenv_global.stdout
   ansible.builtin.command: jenv global {{ global_jdk_version.stdout }}
   register: jenv_global
-  when: global_jdk_version.stdout != jenv_global.stdout
   changed_when: jenv_global.rc == 0
   failed_when: jenv_global.rc != 0
 
@@ -23,6 +23,7 @@
     section:
       name: Set flags for JDK.
       content: export CPPFLAGS="-I$(jenv prefix)/include"
+      interactive: false
   ansible.builtin.set_fact:
-    shell_zprofile_sections:
-      "{{ shell_zprofile_sections | default([]) + [section] }}"
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"

@@ -40,12 +40,14 @@
     }}
   loop_control:
     loop_var: plugin
+    label: clone plugin {{ plugin.name }}
 
 - name: Enable OhMyZsh in .zshrc
   vars:
     section:
-      name: Enable OhMyZsh
+      name: OhMyZsh
       content: "{{ lookup('template', 'ohmyzsh-zshrc-section.j2') }}"
+      interactive: true
   ansible.builtin.set_fact:
-    shell_zshrc_sections:
-      "{{ shell_zshrc_sections | default([]) + [section] }}"
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"

@@ -7,10 +7,9 @@ zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency {{ shell_ohmyzsh_update_frequency_days }}
 {% endif %}
 
-{% if not shell_use_starship %}
 ## Set theme to load.
+{{ "# " if shell_use_starship -}}
 ZSH_THEME="{{ shell_ohmyzsh_theme }}"
-{% endif %}
 
 ## OhMyZsh Plugins to load.
 ## Standard plugins can be found in $ZSH/plugins/

@@ -9,7 +9,7 @@ iterm2_dynamic_profiles_dir: "{{ ansible_env.HOME }}/Library/Application\ Suppor
 # Guid of iTerm2 profile to be set as default.
 iterm2_default_profile_guid: >-
   {{
-    lookup('file', 'Profiles.json') |
+    lookup('file', iterm2_dynamic_profiles_file) |
     from_json |
     community.general.json_query(
       "Profiles[?(@.Name == '" ~ iterm2_default_profile ~ "')].Guid"

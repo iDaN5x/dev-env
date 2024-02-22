@@ -1,8 +1,8 @@
 ---
 - name: Install jEnv
   community.general.homebrew:
-    name: jenv
     state: latest
+    name: jenv
 
 - name: Enable jEnv in shell
   vars:
@@ -11,9 +11,10 @@
       content: |-
         export PATH="$HOME/.jenv/bin:$PATH"
         eval "$(jenv init -)"
+      interactive: false
   ansible.builtin.set_fact:
-    shell_zprofile_sections:
-      "{{ shell_zprofile_sections | default([]) + [section] }}"
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"
 
 - name: Enabled $JAVA_HOME auto-export
   ansible.builtin.command: jenv sh-enable-plugin export

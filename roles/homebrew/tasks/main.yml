@@ -6,25 +6,26 @@
   changed_when: false
 
 - name: Install Homebrew
+  when: brew_prefix.rc != 0
   ansible.builtin.shell:
     cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  when: brew_prefix.rc != 0
   register: install_homebrew
   changed_when: install_homebrew.rc == 0
 
 - name: Update Homebrew
+  when: brew_prefix.rc == 0
   community.general.homebrew:
     update_homebrew: true
-  when: brew_prefix.rc == 0
 
 - name: Ensure Homebrew is added to shell profile
   vars:
     section:
       name: Enable Homebrew.
       content: eval "$(/opt/homebrew/bin/brew shellenv)"
+      interactive: false
   ansible.builtin.set_fact:
-    shell_zprofile_sections:
-      "{{ shell_zprofile_sections | default([]) + [section] }}"
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"
 
 - name: Enable OhMyZsh plugin
   when: shell_use_ohmyzsh
