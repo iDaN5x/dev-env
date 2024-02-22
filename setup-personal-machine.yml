@@ -1,13 +1,9 @@
 ---
 - name: Setup personal machine
-  hosts: localhost
   roles:
     - role: homebrew
     - role: iterm2
     - role: java
-    - role: microk8s
-    - role: haskell
-    - role: nodejs
 
     - role: git
       vars:
@@ -23,9 +19,6 @@
 
     - role: tools
       vars:
-        tools_taps:
-          - teamookla/speedtest
-
         tools_formulas:
           - mas
           - tmux
@@ -36,7 +29,6 @@
           - q
           - bat
           - fx
-          - rustup
           - dive # move to cloud role
           - k9s # move to cloud role
 
@@ -58,12 +50,9 @@
           # - raycast
           # - arc
           # TODO: move to cloud role:
+          - docker
           - lens
 
-        tools_app:
-          - Paste - Endless Clipboard
-
-    # This must be last!
     - role: shell
       vars:
         shell_ohmyzsh_plugins:
@@ -71,10 +60,6 @@
           - name: alias-finder
           - name: jump
           - name: wd
-          - name: zsh-autosuggestions
-            formula: zsh-autosuggestions
-          - name: zsh-syntax-highlighting
-            formula: zsh-syntax-highlighting
           # TODO: move to cloud role:
           - name: helm
           - name: docker

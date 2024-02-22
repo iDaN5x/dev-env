@@ -1,5 +1,18 @@
 ---
 - name: Setup personal machine
-  hosts: localhost
   roles:
-    - role: microk8s
+    - role: shell
+      vars:
+        shell_ohmyzsh_plugins:
+          - name: aliases
+          - name: alias-finder
+          - name: jump
+          - name: wd
+          # TODO: move to cloud role:
+          - name: helm
+          - name: docker
+          - name: kubectl
+
+        shell_use_ohmyzsh: false
+        shell_use_starship: false
+        shell_generate_configs: false

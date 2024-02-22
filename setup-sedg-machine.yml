@@ -1,6 +1,5 @@
 ---
 - name: Setup SolarEdge machine
-  hosts: localhost
   roles:
     - role: homebrew
     - role: iterm2
@@ -21,9 +20,6 @@
 
     - role: tools
       vars:
-        tools_taps:
-          - teamookla/speedtest
-
         tools_formulas:
           - mas
           - tmux
@@ -55,9 +51,9 @@
           # - raycast
           # - arc
            # TODO: move to cloud role
+          - docker
           - lens
 
-    # This must be last!
     - role: shell
       vars:
         shell_ohmyzsh_plugins:
@@ -65,10 +61,6 @@
           - name: alias-finder
           - name: jump
           - name: wd
-          - name: zsh-autosuggestions
-            formula: zsh-autosuggestions
-          - name: zsh-syntax-highlighting
-            formula: zsh-syntax-highlighting
           # TODO: move to cloud role
           - name: helm
           - name: docker
