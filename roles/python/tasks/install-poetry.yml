@@ -20,8 +20,8 @@
   vars:
     section:
       name: Enable Poetry.
-      content: export PATH=$HOME/.local/bin:$PATH
-      interactive: false
+      content: export PATH="$HOME/.local/bin:$PATH"
+      interactive_only: false
   ansible.builtin.set_fact:
     shell_init_sections:
       "{{ shell_init_sections | default([]) + [section] }}"
@@ -33,7 +33,7 @@
     mode: "0755"
 
 - name: Generate Poetry terminal completion script
-  ansible.builtin.command: poetry completions
+  ansible.builtin.command: $HOME/.local/bin/poetry completions
   register: poetry_completions
   changed_when: false
   failed_when: poetry_completions.rc != 0

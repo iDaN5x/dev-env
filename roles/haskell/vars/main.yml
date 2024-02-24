@@ -1,0 +1,6 @@
+---
+haskell_tools:
+  - ghc
+  - cabal
+  - stack
+  - hls

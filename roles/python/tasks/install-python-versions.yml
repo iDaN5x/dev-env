@@ -9,7 +9,7 @@
   loop: "{{ python_versions }}"
   loop_control:
     loop_var: python_version
-    label: "Installing Python {{ python_version }}"
+    label: Installing Python {{ python_version }}
 
 - name: Detect current global Python version
   ansible.builtin.command: pyenv global
@@ -19,7 +19,7 @@
 
 - name: Set global Python version
   when: pyenv_get_global.stdout != python_global_version
-  ansible.builtin.command: "pyenv global {{ python_global_version }}"
+  ansible.builtin.command: pyenv global {{ python_global_version }}
   register: pyenv_set_global
   changed_when: pyenv_set_global.rc == 0
   failed_when: pyenv_set_global.rc != 0

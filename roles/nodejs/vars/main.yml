@@ -1,0 +1,5 @@
+---
+nodejs_nvm_init_script: |-
+  export NVM_DIR="$HOME/.nvm"
+  source "/opt/homebrew/opt/nvm/nvm.sh"
+  source "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"

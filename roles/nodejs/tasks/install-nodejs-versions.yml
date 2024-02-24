@@ -1,0 +1,29 @@
+---
+- name: Install NodeJs versions
+  ansible.builtin.shell: |-
+    {{ nodejs_nvm_init_script }}
+    nvm install {{ nodejs_version }}
+  register: nvm_install
+  changed_when: "'already installed' not in nvm_install.stderr"
+  failed_when: nvm_install.rc != 0
+  loop: "{{ nodejs_versions }}"
+  loop_control:
+    loop_var: nodejs_version
+    label: Installing NodeJs {{ nodejs_version }}
+
+- name: Detect current global NodeJs version
+  ansible.builtin.shell: |-
+    {{ nodejs_nvm_init_script }}
+    nvm version
+  register: nvm_global
+  changed_when: false
+  ignore_errors: true
+
+- name: Set global NodeJs version
+  when: nvm_global.stdout != nodejs_global_version
+  ansible.builtin.shell: |-
+    {{ nodejs_nvm_init_script }}
+    nvm use {{ nodejs_global_version }}
+  register: nvm_set_global
+  changed_when: false
+  failed_when: nvm_set_global.rc != 0

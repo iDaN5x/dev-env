@@ -3,7 +3,7 @@
 iterm2_dynamic_profiles_file: Profiles.json
 
 # iTerm2 default profile name.
-iterm2_default_profile: "Default"
+iterm2_default_profile: Default
 
 # iTerm2 advanced configurations to be set.
 iterm2_advanced_configs:

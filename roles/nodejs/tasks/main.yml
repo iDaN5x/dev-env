@@ -1,0 +1,6 @@
+---
+- name: Include NVM installation
+  ansible.builtin.include_tasks: install-nvm.yml
+
+- name: Include NodeJs versions installation
+  ansible.builtin.include_tasks: install-nodejs-versions.yml

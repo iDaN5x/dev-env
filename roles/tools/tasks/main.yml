@@ -23,3 +23,15 @@
   community.general.homebrew_cask:
     state: latest
     name: "{{ tools_casks }}"
+
+- name: Install AppStore apps
+  ansible.builtin.command: mas lucky "{{ app }}"
+  register: mas_lucky
+  changed_when: mas_lucky.rc == 0
+  failed_when: >
+    mas_lucky.rc != 0 and
+    'already installed' not in mas_lucky.stderr
+  loop: "{{ tools_apps }}"
+  loop_control:
+    loop_var: app
+    label: "Installing AppStore app {{ app }}"

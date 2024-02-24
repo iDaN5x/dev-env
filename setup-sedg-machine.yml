@@ -58,6 +58,7 @@
           - docker
           - lens
 
+    # This must be last!
     - role: shell
       vars:
         shell_ohmyzsh_plugins:

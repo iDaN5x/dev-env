@@ -25,7 +25,7 @@
     section:
       name: Enable iTerm2 integration.
       content: source $HOME/.iterm2_shell_integration.zsh
-      interactive: true
+      interactive_only: true
   ansible.builtin.set_fact:
     shell_init_sections:
       "{{ shell_init_sections | default([]) + [section] }}"
@@ -42,7 +42,7 @@
   ansible.builtin.include_tasks: set-iterm2-configuration.yml
   vars:
     iterm_config:
-      key: "Default Bookmark Guid"
+      key: Default Bookmark Guid
       value: "{{ iterm2_default_profile_guid }}"
 
 - name: Set advanced configurations
@@ -50,4 +50,4 @@
   loop: "{{ iterm2_advanced_configs | dict2items }}"
   loop_control:
     loop_var: iterm_config
-    label: "Set {{ iterm_config.key }} to {{ iterm_config.value }}"
+    label: Set {{ iterm_config.key }} to {{ iterm_config.value }}
