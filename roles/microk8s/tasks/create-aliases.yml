@@ -1,13 +1,15 @@
 ---
 - name: Create aliases
   ansible.builtin.command: >-
-    multipass alias microk8s-vm:{{ alias.definition }} 
+    multipass alias microk8s-vm:{{ alias.definition }}
     {{ alias.get('name', '') }}
   register: multipass_alias
-  changed_when: multipass_alias.rc == 0
+  changed_when: >-
+    multipass_alias.rc == 0 or 
+    'already exists' not in multipass_alias.stderr
   failed_when: >-
     multipass_alias.rc != 0 and
-    'already exists' not in multipass_alias.stdout
+    'already exists' not in multipass_alias.stderr
   loop: "{{ microk8s_aliases }}"
   loop_control:
     loop_var: alias

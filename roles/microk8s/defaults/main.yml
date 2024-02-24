@@ -15,4 +15,4 @@ microk8s_aliases:
   - definition: ctr
   - definition: crictl
   - definition: nerdctl
-    name: docker
+    name: docker # todo: install nerdctl in vm

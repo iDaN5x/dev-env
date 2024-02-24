@@ -5,7 +5,7 @@
     - role: homebrew
     - role: iterm2
     - role: java
-    # - role: microk8s
+    - role: microk8s
     - role: haskell
     - role: nodejs
 
@@ -58,7 +58,6 @@
           # - raycast
           # - arc
           # TODO: move to cloud role:
-          - docker
           - lens
 
         tools_app:
