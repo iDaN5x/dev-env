@@ -1,4 +1,5 @@
 ---
+# TODO: not working
 - name: Enable MicroK8s dashboard.
   ansible.builtin.command: >-
     microk8s enable {{ addon.name }}

@@ -55,7 +55,6 @@
           # - raycast
           # - arc
            # TODO: move to cloud role
-          - docker
           - lens
 
     # This must be last!

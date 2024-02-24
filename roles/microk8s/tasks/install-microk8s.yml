@@ -17,6 +17,12 @@
   failed_when: microk8s_install.rc != 0
 
 - name: Wait for MicroK8s to be ready
+  ansible.builtin.command: microk8s start
+  register: microk8s_start
+  changed_when: false
+  failed_when: microk8s_start.rc != 0
+
+- name: Wait for MicroK8s to be ready
   ansible.builtin.command: microk8s status --wait-ready
   register: microk8s_status
   changed_when: false

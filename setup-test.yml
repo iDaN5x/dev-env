@@ -2,4 +2,4 @@
 - name: Setup personal machine
   hosts: localhost
   roles:
-    - role: nodejs
+    - role: microk8s
