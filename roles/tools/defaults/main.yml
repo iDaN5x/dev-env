@@ -1,6 +1,9 @@
 ---
-# List of tools' Hombrew formulas to be installed.
+# List of Homebrew taps to add.
+tools_taps: []
+
+# List of Homebrew formulas to be installed.
 tools_formulas: []
 
-# List of tools' Hombrew casks to be installed.
+# List of Homebrew casks to be installed.
 tools_casks: []

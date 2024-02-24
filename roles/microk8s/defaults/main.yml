@@ -1,18 +1,11 @@
 ---
 # List of MicroK8s addons to enable.
 microk8s_addons:
-  - name: dns
-  - name: registry
+  - dns
+  - registry
 
 # Whether to enable K8s dashbaord.
 microk8s_dashbaord_enabled: true
 
 # Whether to export kubeconfig file.
 microk8s_export_kubeconfig: true
-
-# Multipass aliases to create for microk8s.
-microk8s_aliases:
-  - definition: ctr
-  - definition: crictl
-  - definition: nerdctl
-    name: docker # todo: install nerdctl in vm

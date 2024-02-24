@@ -11,13 +11,13 @@
     mode: "0644"
 
 - name: Enable shell integration via OhMyZsh plugin
-  when: shell_use_ohmyzsh
+  when: shell_use_ohmyzsh | default(false)
   vars:
     plugin:
       name: iterm2
   ansible.builtin.set_fact:
-    shell_ohmyzsh_plugins:
-      "{{ shell_ohmyzsh_plugins | default([]) + [plugin] }}"
+    shell_ohmyzsh_extra_plugins:
+      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"
 
 - name: Enable shell integration via shell initalization
   when: not shell_use_ohmyzsh
@@ -36,14 +36,14 @@
     dest: >-
       {{ iterm2_dynamic_profiles_dir }}/
       {{ iterm2_dynamic_profiles_file | basename }}
-    mode: '0600'
+    mode: "0600"
 
 - name: Set default user profile
   ansible.builtin.include_tasks: set-iterm2-configuration.yml
   vars:
     iterm_config:
-      key: 'Default Bookmark Guid'
-      value: '{{ iterm2_default_profile_guid }}'
+      key: "Default Bookmark Guid"
+      value: "{{ iterm2_default_profile_guid }}"
 
 - name: Set advanced configurations
   ansible.builtin.include_tasks: set-iterm2-configuration.yml

@@ -26,25 +26,29 @@
     shell_init_sections:
       "{{ shell_init_sections | default([]) + [section] }}"
 
-- name: Check if Poetry terminal completion is enabled.
-  ansible.builtin.stat:
-    path: "{{ shell_ohmyzsh_plugins_dir }}/poetry/_poetry"
-  register: pyenv_completion_script
+- name: Create Poetry completions script target folder
+  ansible.builtin.file:
+    path: "{{ python_poetry_completions_script | dirname }}"
+    state: directory
+    mode: "0755"
 
-- name: Create Poetry terminal completion init script
-  when: not pyenv_completion_script.stat.exists
-  ansible.builtin.shell: >-
-    mkdir -p {{ shell_ohmyzsh_plugins_dir }}/poetry &&
-    poetry completions zsh > {{ shell_ohmyzsh_plugins_dir }}/poetry/_poetry
-  register: pyenv_completions
-  changed_when: pyenv_completions.rc != 0
-  failed_when: pyenv_completions.rc != 0
+- name: Generate Poetry terminal completion script
+  ansible.builtin.command: poetry completions
+  register: poetry_completions
+  changed_when: false
+  failed_when: poetry_completions.rc != 0
+
+- name: Save completions script
+  ansible.builtin.copy:
+    content: "{{ poetry_completions.stdout }}"
+    dest: "{{ python_poetry_completions_script }}"
+    mode: "0755"
 
 - name: Enable Poetry-env OhMyZsh completion
-  when: shell_use_ohmyzsh
+  when: shell_use_ohmyzsh | default(false)
   vars:
     plugin:
       name: poetry-env
   ansible.builtin.set_fact:
-    shell_ohmyzsh_plugins:
-      "{{ shell_ohmyzsh_plugins | default([]) + [plugin] }}"
+    shell_ohmyzsh_extra_plugins:
+      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"

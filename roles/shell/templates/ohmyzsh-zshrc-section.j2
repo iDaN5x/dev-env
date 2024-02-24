@@ -15,7 +15,7 @@ ZSH_THEME="{{ shell_ohmyzsh_theme }}"
 ## Standard plugins can be found in $ZSH/plugins/
 ## Custom plugins may be added to $ZSH_CUSTOM/plugins/
 plugins=(
-{% for plugin in shell_ohmyzsh_plugins %}
+{% for plugin in shell_ohmyzsh_all_plugins %}
   {{ plugin.name }}
 {% endfor %}
 )

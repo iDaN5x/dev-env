@@ -1,7 +1,7 @@
 ---
 # TODO: is this created before first run?
 # Path to iTerm2's configuration .plist file.
-iterm2_plist_path: "{{ ansible_env.HOME }}/Library/Preferences/com.googlecode.iterm2.plist"
+iterm2_plist_file: "{{ ansible_env.HOME }}/Library/Preferences/com.googlecode.iterm2.plist"
 
 # Path to iTerm2's dynamic profiles directory.
 iterm2_dynamic_profiles_dir: "{{ ansible_env.HOME }}/Library/Application\ Support/iTerm2/DynamicProfiles"

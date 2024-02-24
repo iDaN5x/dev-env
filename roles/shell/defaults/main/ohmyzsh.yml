@@ -6,7 +6,7 @@ shell_use_ohmyzsh: true
 shell_ohmyzsh_update_frequency_days: 7
 
 # Theme to be used by OhMyZsh.
-shell_ohmyzsh_theme: amuse
+shell_ohmyzsh_theme: "amuse"
 
 # List of plugins to load, to be specified by playbook.
 shell_ohmyzsh_plugins: []

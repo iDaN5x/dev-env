@@ -16,10 +16,10 @@
   community.general.homebrew:
     name: >-
       {{
-        shell_ohmyzsh_plugins | 
-        selectattr('formula', 'defined') | 
-        map(attribute='formula') | 
-        list 
+        shell_ohmyzsh_plugins |
+        selectattr('formula', 'defined') |
+        map(attribute='formula') |
+        list
       }}
     state: latest
 
@@ -33,10 +33,10 @@
   when: plugin.get('repo', None)
   loop: >-
     {{
-      shell_ohmyzsh_plugins | 
-      selectattr('repo', 'defined') | 
-      map(attribute='repo') | 
-      list 
+      shell_ohmyzsh_plugins |
+      selectattr('repo', 'defined') |
+      map(attribute='repo') |
+      list
     }}
   loop_control:
     loop_var: plugin
@@ -51,3 +51,12 @@
   ansible.builtin.set_fact:
     shell_init_sections:
       "{{ shell_init_sections | default([]) + [section] }}"
+
+- name: Enable OhMyZsh plugins
+  when: shell_use_ohmyzsh | default(false)
+  vars:
+    plugin:
+      name: git
+  ansible.builtin.set_fact:
+    shell_ohmyzsh_extra_plugins:
+      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"

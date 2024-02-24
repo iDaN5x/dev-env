@@ -13,5 +13,4 @@
 
 - name: Refresh registered JDKs
   ansible.builtin.command: jenv refresh-versions
-  register: jenv_refresh
   changed_when: false

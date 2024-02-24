@@ -1,7 +1,7 @@
 ---
 - name: Get current global JDK
   ansible.builtin.command: jenv global
-  register: jenv_global
+  register: jenv_get_global
   changed_when: false
 
 - name: Determine new global JDK version
@@ -12,11 +12,11 @@
   changed_when: false
 
 - name: Set global JDK
-  when: global_jdk_version.stdout != jenv_global.stdout
+  when: global_jdk_version.stdout != jenv_get_global.stdout
   ansible.builtin.command: jenv global {{ global_jdk_version.stdout }}
-  register: jenv_global
-  changed_when: jenv_global.rc == 0
-  failed_when: jenv_global.rc != 0
+  register: jenv_set_global
+  changed_when: jenv_set_global.rc == 0
+  failed_when: jenv_set_global.rc != 0
 
 - name: Export flags for global JDK
   vars:
