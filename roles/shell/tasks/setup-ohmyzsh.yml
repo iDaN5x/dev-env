@@ -47,7 +47,7 @@
     section:
       name: OhMyZsh
       content: "{{ lookup('template', 'ohmyzsh-zshrc-section.j2') }}"
-      interactive: true
+      interactive_only: true
   ansible.builtin.set_fact:
     shell_init_sections:
       "{{ shell_init_sections | default([]) + [section] }}"

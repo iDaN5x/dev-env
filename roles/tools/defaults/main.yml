@@ -7,3 +7,6 @@ tools_formulas: []
 
 # List of Homebrew casks to be installed.
 tools_casks: []
+
+# List of apps to install from AppStore.
+tools_apps: []

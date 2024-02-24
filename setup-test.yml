@@ -2,11 +2,4 @@
 - name: Setup personal machine
   hosts: localhost
   roles:
-    - role: microk8s
-      vars:
-        microk8s_enabled: true
-        microk8s_addons:
-          - dashboard
-          - dns
-          - registry
-          - ingress
+    - role: nodejs

@@ -3,7 +3,7 @@
 # =================================================
 
 {% for section in shell_init_sections %}
-{% if not section.interactive %}
+{% if not section.interactive_only %}
 # {{ section.name }}
 {{ section.content }}
 

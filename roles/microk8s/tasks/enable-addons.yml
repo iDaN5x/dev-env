@@ -1,6 +1,10 @@
 ---
 - name: Enable addons
-  ansible.builtin.command: microk8s enable {{ addon }}
+  ansible.builtin.command: >-
+    microk8s enable {{ addon.name }}
+    {% for key, value in addon.get('options', {}) | dict2items %}
+    --{{ key }}={{ value }}
+    {% endfor %}
   register: enabled_addon
   changed_when: "'already enabled' not in enabled_addon.stdout"
   failed_when: enabled_addon.rc != 0

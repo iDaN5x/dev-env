@@ -27,7 +27,7 @@ alias {{ name }}="{{ definition}}"
 {% endfor %}
  
 {% for section in shell_init_sections %}
-{% if section.interactive | default(false) %}
+{% if section.interactive_only | default(false) %}
 # {{ section.name }}
 {{ section.content }}
 

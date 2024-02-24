@@ -11,7 +11,7 @@
       content: |-
         export PATH="$HOME/.jenv/bin:$PATH"
         eval "$(jenv init -)"
-      interactive: false
+      interactive_only: false
   ansible.builtin.set_fact:
     shell_init_sections:
       "{{ shell_init_sections | default([]) + [section] }}"
