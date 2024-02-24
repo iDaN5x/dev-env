@@ -1,0 +1,3 @@
+---
+python_poetry_completions_script: 
+  "{{ shell_ohmyzsh_plugins_dir }}/poetry/_poetry"

@@ -1,0 +1,15 @@
+---
+# Whether to setup and use OhMyZsh.
+shell_use_ohmyzsh: true
+
+# Frequency of OhMyZsh updates in days.
+shell_ohmyzsh_update_frequency_days: 7
+
+# Theme to be used by OhMyZsh.
+shell_ohmyzsh_theme: "amuse"
+
+# List of plugins to load, to be specified by playbook.
+shell_ohmyzsh_plugins: []
+
+# List of extra plugins to load, to be used by other roles.
+shell_ohmyzsh_extra_plugins: []

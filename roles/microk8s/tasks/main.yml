@@ -1,0 +1,15 @@
+---
+- name: Include MicroK8s installation
+  ansible.builtin.include_tasks: install-microk8s.yml
+
+- name: Include MicroK8s addons enablement
+  ansible.builtin.include_tasks: enable-addons.yml
+  when: microk8s_addons | length > 0
+
+- name: Include MicroK8s dashboard enablement
+  ansible.builtin.include_tasks: enable-dashboard.yml
+  when: microk8s_dashbaord_enabled
+
+- name: Include kubeconfig generation
+  ansible.builtin.include_tasks: export-kubeconfig.yml
+  when: microk8s_export_kubeconfig

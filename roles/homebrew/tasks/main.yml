@@ -28,10 +28,10 @@
       "{{ shell_init_sections | default([]) + [section] }}"
 
 - name: Enable OhMyZsh plugin
-  when: shell_use_ohmyzsh
+  when: shell_use_ohmyzsh | default(false)
   vars:
     plugin:
       name: brew
   ansible.builtin.set_fact:
-    shell_ohmyzsh_plugins:
-      "{{ shell_ohmyzsh_plugins | default([]) + [plugin] }}"
+    shell_ohmyzsh_extra_plugins:
+      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"

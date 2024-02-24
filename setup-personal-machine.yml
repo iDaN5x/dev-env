@@ -18,8 +18,20 @@
           - "3.11"
           - "3.9"
 
+    - role: microk8s
+      vars:
+        microk8s_enabled: true
+        microk8s_addons:
+          - dashboard
+          - dns
+          - registry
+          - ingress
+
     - role: tools
       vars:
+        tools_taps:
+          - teamookla/speedtest
+
         tools_formulas:
           - mas
           - tmux

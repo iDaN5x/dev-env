@@ -1,0 +1,9 @@
+---
+# Controls whether to setup updated Zsh installtion.
+shell_setup_zsh: true
+
+# List of aliases to define.
+shell_zsh_aliases:
+  zshconfig: $EDITOR $HOME/.zshrc
+  ohmyzsh: $EDITOR $HOME/.oh-my-zsh
+  reload: exec $shell

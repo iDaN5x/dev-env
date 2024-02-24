@@ -21,6 +21,9 @@
 
     - role: tools
       vars:
+        tools_taps:
+          - teamookla/speedtest
+
         tools_formulas:
           - mas
           - tmux

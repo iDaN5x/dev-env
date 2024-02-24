@@ -11,14 +11,14 @@
   failed_when: zsh_bin.rc != 0
 
 - name: Check if zsh is registered in /etc/shells
-  ansible.builtin.command: 
+  ansible.builtin.command:
     grep -E "^{{ zsh_bin.stdout }}$" "/etc/shells"
-  register: zsh_registered_result
+  register: zsh_registered
   changed_when: false
   failed_when: false
 
 - name: Add Zsh to /etc/shells
-  when: zsh_registered_result.rc != 0
+  when: zsh_registered.rc != 0
   ansible.builtin.lineinfile:
     path: /etc/shells
     line: "{{ zsh_bin.stdout }}"

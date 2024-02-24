@@ -13,13 +13,13 @@
 
 - name: Detect current global Python version
   ansible.builtin.command: pyenv global
-  register: python_current_global_version
+  register: pyenv_get_global
   changed_when: false
   ignore_errors: true
 
 - name: Set global Python version
-  when: python_current_global_version.stdout != python_global_version
+  when: pyenv_get_global.stdout != python_global_version
   ansible.builtin.command: "pyenv global {{ python_global_version }}"
-  register: pyenv_global
-  changed_when: pyenv_global.rc == 0
-  failed_when: pyenv_global.rc != 0
+  register: pyenv_set_global
+  changed_when: pyenv_set_global.rc == 0
+  failed_when: pyenv_set_global.rc != 0

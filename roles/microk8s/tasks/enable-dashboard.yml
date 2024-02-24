@@ -1,0 +1,12 @@
+---
+- name: Enable MicroK8s dashboard.
+  ansible.builtin.command: microk8s enable {{ addon }}
+  register: enable_dashboard
+  changed_when: "'already enabled' not in enable_dashboard.stdout"
+  failed_when: enable_dashboard.rc != 0
+  loop:
+    - community --hostname='microk8s.local'
+    - dashboard-ingress
+  loop_control:
+    loop_var: addon
+    label: Enabling addon {{ addon }}

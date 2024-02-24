@@ -1,0 +1,10 @@
+---
+- name: Enable addons
+  ansible.builtin.command: microk8s enable {{ addon }}
+  register: enabled_addon
+  changed_when: "'already enabled' not in enabled_addon.stdout"
+  failed_when: enabled_addon.rc != 0
+  loop: "{{ microk8s_addons }}"
+  loop_control:
+    loop_var: addon
+    label: Enabling addon {{ addon }}

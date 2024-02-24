@@ -1,0 +1,4 @@
+---
+microk8s_kube_dir: "{{ ansible_env.HOME }}/.kube"
+
+microk8s_kubeconfig: "{{ microk8s_kube_dir }}/microk8s.yml"

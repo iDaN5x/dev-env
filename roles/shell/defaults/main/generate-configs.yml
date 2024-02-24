@@ -1,0 +1,6 @@
+---
+# Controls whether to setup generate Zsh configuration files.
+shell_generate_configs: true
+
+# List of sections to add to initialization.
+shell_init_sections: []

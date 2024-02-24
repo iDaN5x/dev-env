@@ -1,13 +1,13 @@
 ---
 - name: Check if fingerprint authentication in terminal is enabled
-  ansible.builtin.command: 
+  ansible.builtin.command:
     grep -E "^auth\s+sufficient\s+pam_tid.so$" "/etc/pam.d/sudo"
-  register: auth_enabled_result
+  register: auth_enabled
   changed_when: false
   failed_when: false
 
 - name: Enable support for fingerprint authentication in terminal
-  when: auth_enabled_result.rc != 0
+  when: auth_enabled.rc != 0
   ansible.builtin.lineinfile:
     path: /etc/pam.d/sudo
     insertafter: "^# sudo: auth account password session"
