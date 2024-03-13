@@ -1,4 +1,13 @@
 ---
+# Location of .kube dir in the host machine.
 microk8s_kube_dir: "{{ ansible_env.HOME }}/.kube"
 
+# Location of kubeconfig file to generate.
 microk8s_kubeconfig: "{{ microk8s_kube_dir }}/microk8s.yml"
+
+# Multipass aliases to create for microk8s.
+microk8s_aliases:
+  - definition: ctr
+  - definition: crictl
+  - definition: nerdctl
+    name: docker # todo: install nerdctl in vm

@@ -1,17 +1,11 @@
 # My Development Environment
-> Quickly setup my development enviroment
+## Quickly setup my development enviroment!
 
-## Automatic Setup with Ansible
-```bash
-pip3 install ansible && ansible pull https://github.com/iDaN5x/dev-env.git
-```
+This repository hosts 
+[manual instructions](/docs/playbooks.md) 
+and [automatic Ansible Playbooks](/docs/playbooks.md) 
+for setting up my different development environments.
 
+See [docs](/docs) for more information.
 
-### Setup Rust
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-### Install JetBrains Products
-- Install the jetbrains toolbox with brew as demonstrated above.
-- Launch the toolbox and install desired tools.
+Enjoy!

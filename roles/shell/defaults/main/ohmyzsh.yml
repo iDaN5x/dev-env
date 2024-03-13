@@ -10,6 +10,3 @@ shell_ohmyzsh_theme: amuse
 
 # List of plugins to load, to be specified by playbook.
 shell_ohmyzsh_plugins: []
-
-# List of extra plugins to load, to be used by other roles.
-shell_ohmyzsh_extra_plugins: []
