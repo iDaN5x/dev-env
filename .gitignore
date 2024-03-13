@@ -1,5 +1,8 @@
-# Created by https://www.toptal.com/developers/gitignore/api/macos,vscode
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,vscode
+# Created by https://www.toptal.com/developers/gitignore/api/ansible,macos,vscode
+# Edit at https://www.toptal.com/developers/gitignore?templates=ansible,macos,vscode
+
+### Ansible ###
+*.retry
 
 ### macOS ###
 # General
@@ -35,4 +38,4 @@ Temporary Items
 
 #!! ERROR: vscode is undefined. Use list command to see defined gitignore types !!#
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,vscode
+# End of https://www.toptal.com/developers/gitignore/api/ansible,macos,vscode

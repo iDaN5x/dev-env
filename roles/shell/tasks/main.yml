@@ -1,0 +1,20 @@
+---
+- name: Include fingerprint authentication enablement
+  ansible.builtin.include_tasks: enable-fingerprint-auth.yml
+  when: shell_enable_fingerprint
+
+- name: Include Zsh setup
+  ansible.builtin.include_tasks: setup-zsh.yml
+  when: shell_setup_zsh
+
+- name: Include OhMyZsh setup
+  ansible.builtin.include_tasks: setup-ohmyzsh.yml
+  when: shell_use_ohmyzsh | default(false)
+
+- name: Setup Starship
+  ansible.builtin.include_tasks: setup-starship.yml
+  when: shell_use_starship
+
+- name: Generate configuration files.
+  ansible.builtin.include_tasks: generate-configs.yml
+  when: shell_generate_configs

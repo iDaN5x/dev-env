@@ -1,0 +1,6 @@
+{
+    "ansible.python.interpreterPath": "/usr/bin/python3",
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/tasks": "file:///Users/idan-asraf/Source/dev-env/roles/git/tasks/main.yml"
+    }
+}

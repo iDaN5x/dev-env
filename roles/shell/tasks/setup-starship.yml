@@ -1,0 +1,15 @@
+---
+- name: Install Starship
+  community.general.homebrew:
+    state: latest
+    name: starship
+
+- name: Enable Startship via shell initialization.
+  vars:
+    section:
+      name: Enable Starship.
+      content: eval "$(starship init zsh)"
+      interactive_only: true
+  ansible.builtin.set_fact:
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"

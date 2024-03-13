@@ -1,0 +1,38 @@
+---
+- name: Tap MicroK8s
+  community.general.homebrew_tap:
+    name: ubuntu/microk8s
+
+- name: Install formulas
+  community.general.homebrew:
+    state: latest
+    name:
+      - multipass
+      - ubuntu/microk8s/microk8s
+
+- name: Install MicroK8s
+  ansible.builtin.command: microk8s install
+  register: microk8s_install
+  changed_when: "'installed' in microk8s_install.stdout"
+  failed_when: microk8s_install.rc != 0
+
+- name: Wait for MicroK8s to be ready
+  ansible.builtin.command: microk8s start
+  register: microk8s_start
+  changed_when: false
+  failed_when: microk8s_start.rc != 0
+
+- name: Wait for MicroK8s to be ready
+  ansible.builtin.command: microk8s status --wait-ready
+  register: microk8s_status
+  changed_when: false
+  failed_when: microk8s_status.rc != 0
+
+- name: Enable OhMyZsh plugin
+  when: shell_use_ohmyzsh | default(false)
+  vars:
+    plugin:
+      name: microk8s
+  ansible.builtin.set_fact:
+    shell_ohmyzsh_extra_plugins:
+      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"

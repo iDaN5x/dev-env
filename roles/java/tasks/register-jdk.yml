@@ -1,0 +1,14 @@
+---
+- name: Check if registered JDK - {{ jdk }}
+  ansible.builtin.shell: |
+    set -o pipefail
+    jenv versions --verbose | grep {{ jdk }}
+  register: jdk_registered
+  changed_when: false
+
+- name: Register JDK with JEnv - {{ jdk }}
+  when: not jdk_registered.stdout
+  ansible.builtin.shell: jenv add $(brew --prefix {{ jdk }})
+  register: jenv_add
+  changed_when: jenv_add.rc == 0
+  failed_when: jenv_add.rc != 0

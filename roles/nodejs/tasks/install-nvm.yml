@@ -1,0 +1,21 @@
+---
+- name: Install NVM
+  community.general.homebrew:
+    state: latest
+    name: nvm
+
+- name: Create .nvm directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.nvm"
+    state: directory
+    mode: '0755'
+
+- name: Add NVM to shell profile
+  vars:
+    section:
+      name: Enable NVM.
+      content: "{{ nodejs_nvm_init_script }}"
+      interactive_only: false
+  ansible.builtin.set_fact:
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"

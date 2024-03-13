@@ -1,0 +1,31 @@
+---
+- name: Install GHCup
+  community.general.homebrew:
+    state: latest
+    name: ghcup
+
+- name: Add ghcup initialization to shell
+  vars:
+    section:
+      name: Enable GHCup.
+      content: export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
+      interactive_only: false
+  ansible.builtin.set_fact:
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"
+
+- name: Install toolchain
+  ansible.builtin.command: ghcup install {{ tool }}
+  register: ghcup_install
+  changed_when: "'already installed' not in ghcup_install.stderr"
+  failed_when: ghcup_install.rc != 0
+  loop: "{{ haskell_tools }}"
+  loop_control:
+    loop_var: tool
+    label: Install tool {{ tool }}
+
+- name: Update toolchain
+  ansible.builtin.command: ghcup upgrade
+  register: ghcup_upgrade
+  changed_when: "'Successfully upgraded' in ghcup_upgrade.stdout"
+  failed_when: ghcup_upgrade.rc != 0
