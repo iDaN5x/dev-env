@@ -5,9 +5,15 @@ shell_ohmyzsh_custom_dir: "{{ lookup('env', 'ZSH_CUSTOM') | default('~/.oh-my-zs
 # Path to OhMyZsh plugins directory.
 shell_ohmyzsh_plugins_dir: "{{ shell_ohmyzsh_custom_dir }}/plugins"
 
+# List of extra plugins to load, to be used by other roles.
+shell_ohmyzsh_extra_plugins: []
+
 # List of all plugins to load.
 shell_ohmyzsh_all_plugins: >-
   {{
     shell_ohmyzsh_plugins +
     shell_ohmyzsh_extra_plugins
   }}
+
+# List of sections to add to initialization.
+shell_init_sections: []
