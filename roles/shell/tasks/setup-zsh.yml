@@ -1,0 +1,36 @@
+---
+- name: Install Zsh
+  community.general.homebrew:
+    state: latest
+    name: zsh
+
+- name: Get Zsh binary location
+  ansible.builtin.shell: echo "$(brew --prefix zsh)/bin/zsh"
+  register: zsh_bin
+  changed_when: false
+  failed_when: zsh_bin.rc != 0
+
+- name: Check if zsh is registered in /etc/shells
+  ansible.builtin.command:
+    grep -E "^{{ zsh_bin.stdout }}$" "/etc/shells"
+  register: zsh_registered
+  changed_when: false
+  failed_when: false
+
+- name: Add Zsh to /etc/shells
+  when: zsh_registered.rc != 0
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ zsh_bin.stdout }}"
+    state: present
+  become: true
+
+- name: Set Zsh as the default shell.
+  ansible.builtin.command:
+    chsh -s {{ zsh_bin.stdout }} {{ ansible_env.USER }}
+  register: chsh
+  when: zsh_bin.stdout != ansible_env.SHELL
+  changed_when: chsh.rc == 0
+  failed_when: chsh.rc != 0
+  become: true
+  become_method: ansible.builtin.sudo

@@ -1,0 +1,3 @@
+---
+# Controls whether to enable fingerprint authentication.
+shell_enable_fingerprint: true

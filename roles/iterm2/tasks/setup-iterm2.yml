@@ -1,0 +1,53 @@
+---
+- name: Install iTerm2
+  community.general.homebrew_cask:
+    state: latest
+    name: iterm2
+
+- name: Download Zsh integration
+  ansible.builtin.get_url:
+    url: https://iterm2.com/shell_integration/zsh
+    dest: "{{ ansible_env.HOME }}/.iterm2_shell_integration.zsh"
+    mode: "0644"
+
+- name: Enable shell integration via OhMyZsh plugin
+  when: shell_use_ohmyzsh | default(false)
+  vars:
+    plugin:
+      name: iterm2
+  ansible.builtin.set_fact:
+    shell_ohmyzsh_extra_plugins:
+      "{{ shell_ohmyzsh_extra_plugins | default([]) + [plugin] }}"
+
+- name: Enable shell integration via shell initalization
+  when: not shell_use_ohmyzsh
+  vars:
+    section:
+      name: Enable iTerm2 integration.
+      content: source $HOME/.iterm2_shell_integration.zsh
+      interactive_only: true
+  ansible.builtin.set_fact:
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"
+
+- name: Copy user profile to DynamicProfiles directory
+  ansible.builtin.copy:
+    src: "{{ iterm2_dynamic_profiles_file }}"
+    dest: >-
+      {{ iterm2_dynamic_profiles_dir }}/
+      {{ iterm2_dynamic_profiles_file | basename }}
+    mode: "0600"
+
+- name: Set default user profile
+  ansible.builtin.include_tasks: set-iterm2-configuration.yml
+  vars:
+    iterm_config:
+      key: Default Bookmark Guid
+      value: "{{ iterm2_default_profile_guid }}"
+
+- name: Set advanced configurations
+  ansible.builtin.include_tasks: set-iterm2-configuration.yml
+  loop: "{{ iterm2_advanced_configs | dict2items }}"
+  loop_control:
+    loop_var: iterm_config
+    label: Set {{ iterm_config.key }} to {{ iterm_config.value }}

@@ -1,0 +1,7 @@
+---
+# List of NodeJS versions to install.
+nodejs_versions:
+  - "--lts"
+
+# NodeJs version to set as global.
+nodejs_global_version: "{{ nodejs_versions | first }}"

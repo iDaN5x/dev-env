@@ -1,0 +1,11 @@
+---
+- name: Include install JEnv
+  ansible.builtin.include_tasks: install-jenv.yml
+
+- name: Include install JDKs
+  ansible.builtin.include_tasks: install-jdks.yml
+  when: java_jdks | length > 0
+
+- name: Include set global JDK
+  ansible.builtin.include_tasks: set-global-jdk.yml
+  when: java_jdks is defined
