@@ -6,6 +6,4 @@ iterm2_dynamic_profiles_file: Profiles.json
 iterm2_default_profile: Default
 
 # iTerm2 advanced configurations to be set.
-iterm2_advanced_configs:
-  AlternateMouseScroll: "1"
-  BootstrapDaemon: "0"
+iterm2_advanced_configs: {}
