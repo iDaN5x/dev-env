@@ -4,6 +4,7 @@
     src: "{{ shell_file }}.j2"
     dest: "{{ ansible_env.HOME }}/{{ shell_file }}"
     mode: "0644"
+    force: false
   loop:
     - .zshrc
     - .zprofile

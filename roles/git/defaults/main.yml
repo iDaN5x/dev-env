@@ -1,3 +1,6 @@
 ---
 # Git aliases to be defined.
 git_aliases: {}
+
+# Default location for cloned repositories.
+git_default_repos_dir: "{{ ansible_env.HOME }}/Source"

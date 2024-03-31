@@ -1,0 +1,47 @@
+---
+- name: Detect existing okteto-cli intstallation
+  ansible.builtin.command: okteto version
+  register: okteto_version_result
+  changed_when: false
+  failed_when: false
+
+- name: Install okteto-cli
+  when: okteto_version not in okteto_version_result.stdout
+  ansible.builtin.shell:
+    cmd: >-
+      set -o pipefail
+      curl https://get.okteto.com -sSfL | sh
+    environment:
+      OKTETO_VERSION: "{{ okteto_version }}"
+  register: install_okteto
+  changed_when: "'Okteto successfully installed!' in install_okteto.stdout"
+  failed_when: install_okteto.rc != 0
+  # noqa: command-instead-of-module
+
+- name: Create okteto-cli completions script target folder
+  ansible.builtin.file:
+    path: "{{ okteto_completions_script | dirname }}"
+    state: directory
+    mode: "0755"
+
+- name: Generate okteto-cli completion script
+  ansible.builtin.command: okteto completion zsh
+  register: okteto_completions
+  changed_when: false
+  failed_when: okteto_completions.rc != 0
+
+- name: Save completions script
+  ansible.builtin.copy:
+    content: "{{ okteto_completions.stdout }}"
+    dest: "{{ okteto_completions_script }}"
+    mode: "0755"
+
+- name: Clone Okteto manifests repo
+  when: okteto_manifests_repo
+  ansible.builtin.git:
+    repo: "{{ okteto_manifests_repo }}"
+    dest: 
+      "{{ git_default_repos_dir }}/{{ okteto_manifests_repo | basename | regex_replace('\\.git', '') }}"
+    clone: true
+    update: true
+    version: master

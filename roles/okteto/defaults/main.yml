@@ -1,0 +1,6 @@
+---
+# Version of okteto-cli to install.
+okteto_version: "2.25.4"
+
+# Okteto manifests repository.
+okteto_manifests_repo: null

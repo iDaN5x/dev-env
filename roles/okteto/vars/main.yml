@@ -1,0 +1,4 @@
+---
+# Location of Okteto CLI completion script.
+okteto_completions_script:
+  "{{ shell_ohmyzsh_plugins_dir }}/okteto/_okteto"
