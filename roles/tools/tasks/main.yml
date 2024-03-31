@@ -1,12 +1,9 @@
 ---
-- name: Install Rosetta
+- name: Include Rosetta 2 installation
+  ansible.builtin.include_tasks: install-rosetta.yml
   when: ansible_architecture == "arm64"
-  ansible.builtin.command: softwareupdate --install-rosetta --agree-to-license
-  register: jenv_global
-  changed_when: false
-  failed_when: jenv_global.rc != 0
 
-- name: Install formulas
+- name: Add taps
   community.general.homebrew_tap:
     name: "{{ tap }}"
   loop: "{{ tools_taps }}"

@@ -3,8 +3,6 @@
   ansible.builtin.copy:
     src: "{{ shell_file }}.j2"
     dest: "{{ ansible_env.HOME }}/{{ shell_file }}"
-    force: true
-    backup: true
     mode: "0644"
   loop:
     - .zshrc

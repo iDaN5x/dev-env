@@ -1,0 +1,13 @@
+---
+- name: Detect Rosetta 2 installation
+  ansible.builtin.command: pgrep oahd
+  register: check_rosetta
+  changed_when: false
+  failed_when: false
+
+- name: Install Rosetta
+  when: check_rosetta.rc != 0
+  ansible.builtin.command: softwareupdate --install-rosetta --agree-to-license
+  register: install_rosetta
+  changed_when: false
+  failed_when: install_rosetta.rc != 0
