@@ -15,6 +15,7 @@
       vars:
         git_user_name: Idan Asraf
         git_user_email: idan.asraf@solaredge.com
+        git_editor: code --wait
         git_aliases:
           unstage: reset HEAD --
           decommit: reset HEAD~1 --soft

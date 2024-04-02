@@ -32,3 +32,6 @@
   loop_control:
     loop_var: app
     label: "Installing AppStore app {{ app }}"
+
+- name: Include Fuck CLI tool setup
+  ansible.builtin.include_tasks: install-fuck.yml

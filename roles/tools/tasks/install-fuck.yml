@@ -1,0 +1,17 @@
+---
+- name: Install Fuck CLI tool
+  community.general.homebrew:
+    state: latest
+    name: thefuck
+
+- name: Enable PyEnv in shell
+  vars:
+    section:
+      name: Enable Fuck CLI tool.
+      content: |-
+        eval $(thefuck --alias)
+        eval $(thefuck --alias f)
+      interactive_only: false
+  ansible.builtin.set_fact:
+    shell_init_sections:
+      "{{ shell_init_sections | default([]) + [section] }}"
