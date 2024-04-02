@@ -10,6 +10,12 @@
     dest: "{{ ansible_env.HOME }}/.gitconfig"
     mode: "0600"
 
+- name: Create default repositories directory
+  ansible.builtin.file:
+    path: "{{ git_default_repos_dir }}"
+    state: directory
+    mode: "0755"
+
 - name: Enable OhMyZsh plugin
   when: shell_use_ohmyzsh | default(false)
   vars:
